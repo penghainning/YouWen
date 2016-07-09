@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ public class lessonFragment extends Fragment {
     private Context mContext;
     private Document doc;
     private Elements es;
+    private MainActivity activity;
+    private Handler handler;
     public lessonFragment() {
     }
 
@@ -45,7 +48,19 @@ public class lessonFragment extends Fragment {
         View view = inflater.inflate(R.layout.lesson_fragment, container, false);
         bindspinner(view);
         mContext=getActivity();
+        activity=(MainActivity)getActivity();
+        handler=activity.handler;
         mlesson=(ListView)view.findViewById(R.id.mlesson);
+        mlesson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Lesson_data d=(Lesson_data)mlesson.getAdapter().getItem(position);
+                Log.i("url",d.getLessonurl());
+                MainActivity.mediaurl=d.getLessonurl();
+                handler.sendEmptyMessage(100);
+
+            }
+        });
         return view;
     }
     public  void  bindspinner(View view){

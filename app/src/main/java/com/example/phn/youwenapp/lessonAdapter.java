@@ -26,7 +26,7 @@ public class lessonAdapter extends BaseAdapter {
         return mData.size();
     }
     public Object getItem(int position) {
-        return null;
+        return mData.get(position);
     }
     public long getItemId(int position) {
         return position;

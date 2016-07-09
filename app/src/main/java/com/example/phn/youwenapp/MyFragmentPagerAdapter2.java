@@ -10,7 +10,7 @@ import android.view.ViewGroup;
  */
 public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
    /*声明10个页面*/
-    private final int PAGER_COUNT = 8;
+    private final int PAGER_COUNT = 9;
     private downnewsFragment downnewsf =null;
     private soundFragment soundf=null;
     private  marketFragment marketf=null;
@@ -19,6 +19,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
     private jokeFragment jokef=null;
     private favourFragment favourf=null;
     private personFragment personf=null;
+
 
 
     public MyFragmentPagerAdapter2(FragmentManager fm) {
@@ -31,6 +32,8 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         soundf=new soundFragment();
         favourf=new favourFragment();
         personf=new personFragment();
+
+
     }
 
 
@@ -40,32 +43,32 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup vg, int position) {
-        return super.instantiateItem(vg, position);
-    }
+        public Object instantiateItem(ViewGroup vg, int position) {
+            return super.instantiateItem(vg, position);
+        }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        System.out.println("position Destory" + position);
-        super.destroyItem(container, position, object);
-    }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            System.out.println("position Destory" + position);
+            super.destroyItem(container, position, object);
+        }
 
-    @Override
-    public Fragment getItem(int position) {
-        Fragment fragment = null;
-        switch (position) {
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            switch (position) {
 
-            case MainActivity.DOWN_ONE:
-                fragment = downnewsf;
-                break;
-            case MainActivity.DOWN_TWO:
-                fragment = soundf;
-                break;
-            case MainActivity.DOWN_THREE:
-                fragment = marketf;
-                break;
-            case MainActivity.DOWN_FOUR:
-                fragment = petf;
+                case MainActivity.DOWN_ONE:
+                    fragment = downnewsf;
+                    break;
+                case MainActivity.DOWN_TWO:
+                    fragment = soundf;
+                    break;
+                case MainActivity.DOWN_THREE:
+                    fragment = marketf;
+                    break;
+                case MainActivity.DOWN_FOUR:
+                    fragment = petf;
                 break;
             case MainActivity.DOWN_FIVE:
                 fragment = storef;
@@ -78,7 +81,10 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                 break;
             case MainActivity.DOWN_EIGHT:
                 fragment = personf;
-                break;
+                break ;
+                case 8:
+                    fragment=new mediaFragment(MainActivity.mediaurl);
+                    break;
         }
         return fragment;
     }

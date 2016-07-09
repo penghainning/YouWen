@@ -1,9 +1,12 @@
 package com.example.phn.youwenapp;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         ViewPager.OnPageChangeListener  {
 
     /*声明所有控件*/
+    public static String mediaurl;
     private EditText searchText;
     private Button search;
     private RadioGroup up_tab;
@@ -64,7 +68,24 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         bindViews();
     }
 
+    public Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg!=null){
+                switch (msg.what) {
+                    case 100:
+                        Log.i("mediaurl",mediaurl);
+                       down_viewpager.setCurrentItem(8);
+                        break;
 
+                    default:
+                        break;
+                }
+            }
+        }
+
+    };
 
     private void bindViews() {
 
@@ -204,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     break;
                 case DOWN_EIGHT:
                     person.setChecked(true);
+                    break;
+                case 8:
                     break;
             }
         }
