@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_launcher"
+            android:id="@+id/imageView2" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="用户名"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="等级"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="个性签名"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RadioGroup
+            android:id="@+id/person_tab"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/comment"
+                android:checked="true"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:button="@null"
+                android:layout_width="0dp"
+                android:background="@drawable/button_setting"
+                android:text="评论" />
+            <RadioButton
+                android:id="@+id/publish"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/button_setting"
+                android:text="发布内容" />
+            <RadioButton
+                android:id="@+id/reply"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:button="@null"
+                android:background="@drawable/button_setting"
+                android:text="收到回复" />
+            <RadioButton
+                android:id="@+id/question"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:button="@null"
+                android:background="@drawable/button_setting"
+                android:layout_weight="1"
+                android:text="问题反馈" />
+            <RadioButton
+                android:id="@+id/setting"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:button="@null"
+                android:background="@drawable/button_setting"
+                android:gravity="center"
+                android:text="设置"
+                android:checked="false" />
+        </RadioGroup>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/up_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+
+</LinearLayout>

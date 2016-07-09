@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string-array name="brand">
+            <item>品牌</item>
+            <item>奥迪</item>
+            <item>大众</item>
+            <item>宝马</item>
+            <item>奔驰</item>
+        </string-array>
+
+    <string-array name="price">
+        <item>选择价格</item>
+        <item>10万以下</item>
+        <item>10-20万</item>
+        <item>20-30万</item>
+        <item>30-50万</item>
+        <item>50万以上</item>
+    </string-array>
+
+    <string-array name="car_break">
+        <item>查车辆违章</item>
+    </string-array>
+
+    <string-array name="news">
+        <item>平民新闻</item>
+        <item>凤凰新闻</item>
+    </string-array>
+
+    <string-array name="movie">
+        <item>电视剧</item>
+        <item>电影</item>
+        <item>vip排行</item>
+        <item>华语</item>
+        <item>欧美</item>
+    </string-array>
+
+
+    <string-array name="sports">
+        <item>直播</item>
+        <item>足球</item>
+        <item>篮球</item>
+        <item>网球</item>
+        <item>羽毛球</item>
+        <item>赛车</item>
+    </string-array>
+
+    <string-array name="lesson">
+        <item>总排行榜</item>
+        <item>周排行榜</item>
+        <item>月排行榜</item>
+        <item>最近课程</item>
+    </string-array>
+
+    <string-array name="province">
+        <item>省</item>
+    </string-array>
+
+    <string-array name="city">
+        <item>市</item>
+    </string-array>
+
+
+    <string-array name="shape">
+        <item>选择车型</item>
+        <item>微型车</item>
+        <item>紧凑车</item>
+        <item>大型车</item>
+        <item>中型车</item>
+        <item>豪华车</item>
+        <item>跑车</item>
+        <item>新能源汽车</item>
+        <item>SUV</item>
+        <item>MVP</item>
+    </string-array>
+    </resources>
