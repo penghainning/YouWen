@@ -22,7 +22,10 @@ import android.widget.VideoView;
 public class mediaFragment extends Fragment {
     private WebView webView;
     private String mediaurl;
-    public mediaFragment(String mediaurl){
+    public mediaFragment(){
+    }
+    public  void setMediaurl(String mediaurl)
+    {
         this.mediaurl=mediaurl;
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class mediaFragment extends Fragment {
         setSettings(setting);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+        webView.clearHistory();
         webView.loadUrl(mediaurl);
         return view;
     }

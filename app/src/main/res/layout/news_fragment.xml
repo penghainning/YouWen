@@ -47,13 +47,10 @@
         android:layout_width="0dp"
         android:layout_weight="3"
         android:layout_height="match_parent">
-
-        <TextView
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="50sp"
-            android:text="内容"/>
+            android:id="@+id/newslist"></ListView>
 
     </LinearLayout>
 

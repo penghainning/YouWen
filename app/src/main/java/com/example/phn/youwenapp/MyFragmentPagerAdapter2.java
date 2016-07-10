@@ -19,7 +19,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
     private jokeFragment jokef=null;
     private favourFragment favourf=null;
     private personFragment personf=null;
-
+   private mediaFragment mediaf=null;
 
 
     public MyFragmentPagerAdapter2(FragmentManager fm) {
@@ -32,6 +32,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         soundf=new soundFragment();
         favourf=new favourFragment();
         personf=new personFragment();
+        mediaf=new mediaFragment();
 
 
     }
@@ -50,6 +51,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             System.out.println("position Destory" + position);
+
             super.destroyItem(container, position, object);
         }
 
@@ -83,7 +85,8 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                 fragment = personf;
                 break ;
                 case 8:
-                    fragment=new mediaFragment(MainActivity.mediaurl);
+                    mediaf.setMediaurl(MainActivity.mediaurl);
+                    fragment=mediaf;
                     break;
         }
         return fragment;

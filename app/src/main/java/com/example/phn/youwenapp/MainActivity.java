@@ -75,8 +75,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             if(msg!=null){
                 switch (msg.what) {
                     case 100:
-                        Log.i("mediaurl",mediaurl);
+                        Log.i("Main_lessonurl",mediaurl);
                        down_viewpager.setCurrentItem(8);
+                        break;
+                    case 101:
+                        down_viewpager.setCurrentItem(9);
                         break;
 
                     default:
