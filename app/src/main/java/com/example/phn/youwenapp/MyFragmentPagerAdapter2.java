@@ -3,6 +3,7 @@ package com.example.phn.youwenapp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.ViewGroup;
 
 /**
@@ -10,16 +11,16 @@ import android.view.ViewGroup;
  */
 public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
    /*声明10个页面*/
-    private final int PAGER_COUNT = 9;
+    private final int PAGER_COUNT = 8;
     private downnewsFragment downnewsf =null;
     private soundFragment soundf=null;
+    private soundFragment2 soundf2=null;
     private  marketFragment marketf=null;
     private petFragment petf=null;
     private storeFragment storef=null;
     private jokeFragment jokef=null;
     private favourFragment favourf=null;
     private personFragment personf=null;
-   private mediaFragment mediaf=null;
 
 
     public MyFragmentPagerAdapter2(FragmentManager fm) {
@@ -30,9 +31,9 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         petf=new petFragment();
         jokef=new jokeFragment();
         soundf=new soundFragment();
+        soundf2=new soundFragment2();
         favourf=new favourFragment();
         personf=new personFragment();
-        mediaf=new mediaFragment();
 
 
     }
@@ -64,7 +65,11 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                     fragment = downnewsf;
                     break;
                 case MainActivity.DOWN_TWO:
-                    fragment = soundf;
+                    Log.i("soundtype", String.valueOf(MainActivity.type));
+                    if(MainActivity.type==1)
+                        fragment=soundf2;
+                    else
+                        fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:
                     fragment = marketf;
@@ -84,10 +89,6 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
             case MainActivity.DOWN_EIGHT:
                 fragment = personf;
                 break ;
-                case 8:
-                    mediaf.setMediaurl(MainActivity.mediaurl);
-                    fragment=mediaf;
-                    break;
         }
         return fragment;
     }

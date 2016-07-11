@@ -2,17 +2,23 @@ package com.example.phn.youwenapp;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener  {
@@ -41,7 +47,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private MyFragmentPagerAdapter mAdapter;
     private MyFragmentPagerAdapter2 mAdapter2;
     private HorizontalScrollView hv;
+    private FragmentManager fManager = null;
+    private FragmentTransaction ft=null;
+    private searchFragment searchf=null;
     private int width;
+    public static int type=0;
     public static final int UP_ONE = 0;
     public static final int UP_TWO = 1;
     public static final int UP_THREE = 2;
@@ -63,9 +73,36 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         DisplayMetrics  dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         width=dm.widthPixels/6;
+        fManager=getSupportFragmentManager();
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         mAdapter2 = new MyFragmentPagerAdapter2(getSupportFragmentManager());
         bindViews();
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if("".equals(searchText.getText().toString()))
+                {
+                    Toast.makeText(MainActivity.this,"内容不能为空", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    String text=searchText.getText().toString();
+                    mediaurl="https://www.baidu.com/s?wd="+text;
+                    searchf=new searchFragment(mediaurl);
+                    if(fManager.getBackStackEntryCount() != 0)
+                        fManager.popBackStack();
+                    ft = fManager.beginTransaction();
+                    ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,
+                            R.anim.fragment_slide_out_to_top,
+                            R.anim.fragment_slide_in_from_top,
+                            R.anim.fragment_slide_out_to_top);
+                    ft.replace(R.id.webreplace,searchf);
+                    ft.addToBackStack(null);
+                    ft.commit();
+
+                }
+            }
+        });
     }
 
     public Handler handler=new Handler(){
@@ -76,12 +113,19 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 switch (msg.what) {
                     case 100:
                         Log.i("Main_lessonurl",mediaurl);
-                       down_viewpager.setCurrentItem(8);
+                        mediaFragment mediaf=new mediaFragment(mediaurl);
+                        if(fManager.getBackStackEntryCount() != 0)
+                            fManager.popBackStack();
+                        ft = fManager.beginTransaction();
+                        ft.replace(R.id.moveable,mediaf);
+                        ft.addToBackStack(null);
+                        ft.commit();
                         break;
                     case 101:
-                        down_viewpager.setCurrentItem(9);
+                        type=1;
                         break;
-
+                    case 102:
+                        fManager.popBackStack();
                     default:
                         break;
                 }
@@ -93,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private void bindViews() {
 
         searchText=(EditText)findViewById(R.id.searchtext);
+
         search=(Button)findViewById(R.id.search);
         up_tab=(RadioGroup)findViewById(R.id.up_tab);
         down_tab=(RadioGroup)findViewById(R.id.down_tab);
@@ -132,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
+
             case R.id.car:
                 up_viewpager.setCurrentItem(UP_ONE);
                 break;
@@ -148,27 +194,44 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 up_viewpager.setCurrentItem(UP_FIVE);
                 break;
             case R.id.down_news:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_ONE);
                 break;
             case R.id.sound:
+                if(fManager.getBackStackEntryCount() != 0)
+
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_TWO);
                 break;
             case R.id.market:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_THREE);
                 break;
             case R.id.pet:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_FOUR);
                 break;
             case R.id.store:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_FIVE);
                 break;
             case R.id.joke:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_SIX);
                 break;
             case R.id.favour:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_SEVEN);
                 break;
             case R.id.person:
+                if(fManager.getBackStackEntryCount() != 0)
+                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_EIGHT);
                 break;
         }
@@ -229,9 +292,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 case DOWN_EIGHT:
                     person.setChecked(true);
                     break;
-                case 8:
-                    break;
+
             }
         }
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

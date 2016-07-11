@@ -141,9 +141,9 @@ public class lessonFragment extends Fragment {
                             Log.i("3",lessonurl);
                             Log.i("4",visit);
                            if(n==3)
-                            mData.add(new Lesson_data(lessonurl,String.valueOf(++i),title,visit));//添加到listview中
+                            mData.add(new Lesson_data(lessonurl,String.valueOf(++i),title,visit,++i));//添加到listview中
                             else
-                               mData.add(new Lesson_data(lessonurl,number,title,visit));
+                               mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
                         }
 
                         mlessonAdapter = new lessonAdapter((LinkedList<Lesson_data>) mData, mContext);

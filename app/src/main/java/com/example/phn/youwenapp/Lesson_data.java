@@ -8,13 +8,15 @@ public class Lesson_data {
     private  String number;//课程序号
     private  String title;//课程标题
     private  String visit;//访问数
+    private int id;
 
-    public Lesson_data(String lessonurl,String number,String title,String visit)
+    public Lesson_data(String lessonurl,String number,String title,String visit,int id)
     {
         this.lessonurl=lessonurl;
         this.number=number;
         this.title=title;
         this.visit=visit;
+        this.id=id;
     }
 
     public String getLessonurl() {
@@ -31,6 +33,14 @@ public class Lesson_data {
 
     public String getVisit() {
         return visit;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setLessonurl(String lessonurl) {

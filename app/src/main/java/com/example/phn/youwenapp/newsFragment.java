@@ -115,9 +115,10 @@ public class newsFragment extends Fragment {
                 case 0:
                     try {
                         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+                        int i=0;
                         for (Element e : es) {
                             Map<String, String> map = new HashMap<String, String>();
-                            map.put("title", e.getElementsByTag("a").text());
+                            map.put("title", String.valueOf(++i)+" :"+e.getElementsByTag("a").text());
                             map.put("href", e.getElementsByTag("a").attr("href"));
                             list.add(map);
                         }
