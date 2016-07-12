@@ -1,15 +1,25 @@
 package com.example.phn.youwenapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class carFragment extends Fragment {//汽车栏具体界面
 
@@ -17,7 +27,9 @@ public class carFragment extends Fragment {//汽车栏具体界面
     private Spinner car_price;
     private Spinner car_shape;
     private Spinner car_break;
-
+    private WebView carwebview;
+    Document doc;
+    String h;
     public carFragment() {
     }
 
@@ -25,6 +37,14 @@ public class carFragment extends Fragment {//汽车栏具体界面
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.car_fragment, container, false);
         bindspinner(view);
+        carwebview=(WebView)view.findViewById(R.id.carwebview);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        WebSettings setting = carwebview.getSettings();
+        setSettings(setting);
+        carwebview.setWebChromeClient(new WebChromeClient());
+        carwebview.setWebViewClient(new WebViewClient());
+        carwebview.loadUrl("http://auto.sohu.com/");
+        //new Thread(new load()).start();
         return view;
     }
 
@@ -48,5 +68,89 @@ public class carFragment extends Fragment {//汽车栏具体界面
         String[] mItems4 = getResources().getStringArray(R.array.car_break);
         ArrayAdapter<String> mAdapter4=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems4);
         car_break.setAdapter(mAdapter4);
+        car_break.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position>0)
+                    carwebview.loadUrl(carbreak(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+    class load extends Thread {//接受服务器信息的线程
+        public void run() {
+            try {
+
+                    doc = Jsoup.parse(new URL("https://www.baidu.com/"), 5000);
+            } catch (MalformedURLException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Message msg = new Message();
+            msg.what = 0;
+            myHandler.sendMessage(msg);
+
+        }
+    }
+
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {    //接受服务器信息更新UI
+            switch (msg.what) {
+                case 0:
+                    try {
+                      carwebview.loadData(doc.outerHtml(),"text/html","utf-8");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+    private void setSettings(WebSettings setting) {
+        setting.setJavaScriptEnabled(true);
+        setting.setPluginState(WebSettings.PluginState.ON);
+        setting.setJavaScriptCanOpenWindowsAutomatically(true);
+        setting.setAllowFileAccess(true);
+        setting.setDefaultTextEncodingName("UTF-8");
+        setting.setLoadWithOverviewMode(true);
+        setting.setUseWideViewPort(true);
+        setting.setBuiltInZoomControls(true);
+        setting.setDisplayZoomControls(false);
+        setting.setSupportZoom(true);
+
+        setting.setDomStorageEnabled(true);
+        setting.setDatabaseEnabled(true);
+        // 全屏显示
+        setting.setLoadWithOverviewMode(true);
+        setting.setUseWideViewPort(true);
+    }
+    public void onDestroy()
+    {
+        if (carwebview != null) {
+            carwebview.removeAllViews();
+            carwebview.destroy();
+            carwebview = null;
+        }
+        super.onDestroy();
+    }
+    public String carbreak(int n)
+    {
+        String carurl="";
+        if(n==1)
+            carurl="http://www.weizhangwang.com/";
+       else if(n==2)
+            carurl="http://www.weizhangwang.com/jiashizheng/";
+        else if(n==3)
+            carurl="http://daima.weizhangwang.com/";
+
+        return carurl;
+
     }
 }

@@ -2,10 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/soundlist">
+ <FrameLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <ListView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/soundlist">
 
-</ListView>
+     </ListView>
+<RadioGroup
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/citiselect"
+    android:focusable="true"
+    android:layout_gravity="center|top"
+    android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/city1"
+        android:checked="true"
+        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:gravity="center"
+        android:textColor="#ff0000"
+        android:button="@null"
+        android:background="@drawable/button_setting"
+        android:alpha="100"
+        android:text="深圳" />
+    <RadioButton
+        android:id="@+id/city2"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:button="@null"
+        android:textColor="#ff0000"
+        android:alpha="100"
+        android:background="@drawable/button_setting"
+        android:text="汕尾" />
+</RadioGroup>
+
+
+ </FrameLayout>
 </LinearLayout>

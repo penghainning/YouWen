@@ -1,5 +1,6 @@
 package com.example.phn.youwenapp;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 
 import org.jsoup.Jsoup;
@@ -19,6 +22,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,16 +37,40 @@ public class soundFragment2 extends Fragment {
     Document doc;
     Elements es;
     Handler handler;
-
+    RadioGroup citiselect;
+    RadioButton city1;
+    RadioButton city2;
+    ProgressDialog progress;
+    List<Map<String, String>> list;
     public soundFragment2() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sound_fragment2, container, false);
         soundlist=(ListView)view.findViewById(R.id.soundlist);
+        city1=(RadioButton)view.findViewById(R.id.city1);
+        city2=(RadioButton)view.findViewById(R.id.city2);
+        list = new ArrayList<Map<String, String>>();
+        citiselect=(RadioGroup)view.findViewById(R.id.citiselect);
+        citiselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+
+                    case R.id.city1:
+                        progress= ProgressDialog.show(getActivity(),"", "正在加载数据,请稍候...");
+                        new Thread(new load(1)).start();
+                        city1.setChecked(true);
+                        break;
+                    case R.id.city2:
+                        progress= ProgressDialog.show(getActivity(),"", "正在加载数据,请稍候...");
+                        new Thread(new load(2)).start();
+                        city2.setChecked(true);
+                        break;
+            }
+        }});
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        new  Thread(new load()).start();
+        new Thread(new load(1)).start();
         soundlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -56,20 +84,38 @@ public class soundFragment2 extends Fragment {
     }
 
     class load extends Thread {//接受服务器信息的线程
+        private  int n;
+        load(int n){this.n=n;}
         public void run() {
             try {
+                if(n==1)
+                {
+                    doc = Jsoup.parse(new URL("http://www.sznews.com/"),5000);
+                    es=doc.select("div.newcon_01").select("ul.list_1>li");
 
-                doc = Jsoup.parse(new URL("http://roll.news.sina.com.cn/s/channel.php?ch=01#col=89&spec=&type=&ch=01&k=&offset_page=0&offset_num=0&num=60&asc=&page=1"),5000);
-                es=doc.select("div#d_list>ul>li");
+                }
+                else
+                {
+                    doc = Jsoup.parse(new URL("http://www.swsm.net/"),5000);
+                    es=doc.select("ul>li");
+                }
+
 
             } catch (MalformedURLException e1) {
+                Log.i("Malfrom","超时啦");
                 e1.printStackTrace();
             } catch (IOException e1) {
+                Log.i("IO","其他");
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             }
 
             Message msg = new Message();
             msg.what = 0;
+            Bundle bundle = new Bundle();
+            bundle.clear();
+            bundle.putInt("num",n);
+            msg.setData(bundle);
             myHandler.sendMessage(msg);
 
         }
@@ -80,14 +126,38 @@ public class soundFragment2 extends Fragment {
             switch (msg.what) {
                 case 0:
                     try {
-                        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+                        Bundle bundle = msg.getData();
+                        int n=bundle.getInt("num");
                         int i=0;
-                        for (Element e : es) {
+                        list.clear();
+                        if(n==2)
+                        {
+                            for (Element e : es)
+                            {
+                                Map<String, String> map = new HashMap<String, String>();
+                                String h = e.getElementsByClass("z").text() + e.getElementsByTag("a").text();
+                                if (h.startsWith("[")) {
+                                    map.put("title", String.valueOf(++i) + ": " + h);
+                                    map.put("href", "http://www.swsm.net/" + e.getElementsByTag("a").attr("href"));
+                                    list.add(map);
+                                }
+                            }
+                        }
 
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("title",String.valueOf(++i)+": "+ e.getElementsByClass("c_tit").tagName("a").text());
-                            map.put("href",  e.getElementsByTag("a").attr("href"));
-                            list.add(map);
+                            else
+                            {
+                                for (Element e : es)
+                                {
+                                    Map<String, String> map = new HashMap<String, String>();
+                                    String w=e.getElementsByTag("a").attr("href");
+                                    if(!w.startsWith("http://"))
+                                        w="http://www.sznews.com/"+w;
+                                    map.put("title",String.valueOf(++i)+": "+ e.getElementsByTag("a").text());
+                                    map.put("href", w);
+                                    list.add(map);
+                            }
+
+
                         }
 
 
@@ -95,6 +165,7 @@ public class soundFragment2 extends Fragment {
                                 new String[] { "title","href" }, new int[] {
                                 android.R.id.text1,android.R.id.text2
                         }));
+                        progress.dismiss();
 
                     } catch (Exception e) {
                         e.printStackTrace();

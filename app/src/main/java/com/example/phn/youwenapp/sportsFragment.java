@@ -108,6 +108,7 @@ private Spinner sports_type;
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             }
 

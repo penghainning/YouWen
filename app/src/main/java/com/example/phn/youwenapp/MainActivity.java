@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
@@ -77,30 +80,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         mAdapter2 = new MyFragmentPagerAdapter2(getSupportFragmentManager());
         bindViews();
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER))
+                {
+                    mySearch();
+                    return true;
+                }
+                return false;
+            }
+        });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("".equals(searchText.getText().toString()))
-                {
-                    Toast.makeText(MainActivity.this,"内容不能为空", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    String text=searchText.getText().toString();
-                    mediaurl="https://www.baidu.com/s?wd="+text;
-                    searchf=new searchFragment(mediaurl);
-                    if(fManager.getBackStackEntryCount() != 0)
-                        fManager.popBackStack();
-                    ft = fManager.beginTransaction();
-                    ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,
-                            R.anim.fragment_slide_out_to_top,
-                            R.anim.fragment_slide_in_from_top,
-                            R.anim.fragment_slide_out_to_top);
-                    ft.replace(R.id.webreplace,searchf);
-                    ft.addToBackStack(null);
-                    ft.commit();
-
-                }
+              mySearch();
             }
         });
     }
@@ -126,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         break;
                     case 102:
                         fManager.popBackStack();
+                        break;
+                    case 88:
+                        Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
                     default:
                         break;
                 }
@@ -137,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private void bindViews() {
 
         searchText=(EditText)findViewById(R.id.searchtext);
-
         search=(Button)findViewById(R.id.search);
         up_tab=(RadioGroup)findViewById(R.id.up_tab);
         down_tab=(RadioGroup)findViewById(R.id.down_tab);
@@ -298,5 +294,29 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
     public void onBackPressed() {
         super.onBackPressed();
+    }
+    public void mySearch()
+    {
+        if("".equals(searchText.getText().toString()))
+        {
+            Toast.makeText(MainActivity.this,"内容不能为空", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            String text=searchText.getText().toString();
+            mediaurl="https://www.baidu.com/s?wd="+text;
+            searchf=new searchFragment(mediaurl);
+            if(fManager.getBackStackEntryCount() != 0)
+                fManager.popBackStack();
+            ft = fManager.beginTransaction();
+            ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,
+                    R.anim.fragment_slide_out_to_top,
+                    R.anim.fragment_slide_in_from_top,
+                    R.anim.fragment_slide_out_to_top);
+            ft.replace(R.id.webreplace,searchf);
+            ft.addToBackStack(null);
+            ft.commit();
+
+        }
     }
 }

@@ -40,6 +40,7 @@ public class searchFragment extends Fragment {
         handler=activity.handler;
         searchwebView = (WebView)view.findViewById(R.id.searchwebView);
         close=(Button)view.findViewById(R.id.close);
+        close.getBackground().setAlpha(100);//0~255透明度值
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

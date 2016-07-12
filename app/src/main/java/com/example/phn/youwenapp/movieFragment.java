@@ -127,6 +127,7 @@ public class movieFragment extends Fragment {
                 e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
+                handler.sendEmptyMessage(88);
             }
 
             Message msg = new Message();

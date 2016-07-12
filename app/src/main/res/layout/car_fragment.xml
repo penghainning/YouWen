@@ -51,12 +51,12 @@
         android:layout_height="match_parent">
 
 
-        <TextView
+        <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="50sp"
-            android:text="内容"/>
+            android:id="@+id/carwebview">
+
+        </WebView>
 
     </LinearLayout>
 </LinearLayout>

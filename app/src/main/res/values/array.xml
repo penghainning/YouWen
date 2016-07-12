@@ -19,6 +19,10 @@
 
     <string-array name="car_break">
         <item>查车辆违章</item>
+        <item>驾照扣分查询</item>
+        <item>交通违章查询</item>
+        <item>违章代码查询</item>
+
     </string-array>
 
     <string-array name="news">
