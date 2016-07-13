@@ -86,7 +86,7 @@ public class newsFragment extends Fragment {
                 if(n==0)
                 {
                     doc = Jsoup.parse(new URL("http://news.qq.com/"), 5000);
-                    es = doc.select("em.f14*");
+                    es = doc.select("div.text>em.f14*");
 
                 }
                 else if(n==1)
@@ -124,9 +124,9 @@ public class newsFragment extends Fragment {
                         }
 
 
-                        newslist.setAdapter(new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
-                                new String[] { "title","href" }, new int[] {
-                                android.R.id.text1,android.R.id.text2
+                        newslist.setAdapter(new SimpleAdapter(getActivity(), list, R.layout.news_layout,
+                                new String[] {"title" }, new int[] {
+                                R.id.text1
                         }));
 
                     } catch (Exception e) {

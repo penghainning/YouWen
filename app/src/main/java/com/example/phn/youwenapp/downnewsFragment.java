@@ -10,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+
+import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +29,7 @@ import java.util.Map;
  */
 public class downnewsFragment extends Fragment {
     ListView downnewslist;
+    private List<Lesson_data> mData = null;
     Document doc;
     Elements es;
     Handler handler;
@@ -46,9 +46,9 @@ public class downnewsFragment extends Fragment {
         downnewslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, String> m=(Map<String,String>)downnewslist.getAdapter().getItem(position);
-                Log.i("url",m.get("href"));
-                MainActivity.mediaurl=m.get("href");
+                Lesson_data d=(Lesson_data)downnewslist.getAdapter().getItem(position);
+                Log.i("url",d.getLessonurl());
+                MainActivity.mediaurl=d.getLessonurl();
                 handler.sendEmptyMessage(100);
             }
         });
@@ -59,13 +59,18 @@ public class downnewsFragment extends Fragment {
         public void run() {
             try {
 
-                doc = Jsoup.parse(new URL("http://roll.news.sina.com.cn/s/channel.php?ch=01#col=89&spec=&type=&ch=01&k=&offset_page=0&offset_num=0&num=60&asc=&page=1"),5000);
-                es=doc.select("div#d_list>ul>li");
+                doc = Jsoup.parse(new URL("http://www.chinanews.com/scroll-news/news1.html"),5000);
+               es=doc.select("div.content_list>ul>li");
+               // es=doc.select("li");
+                Log.i("run: ",es.text());
 
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
                 handler.sendEmptyMessage(88);
+                e1.printStackTrace();
+            }catch (java.lang.Exception e1)
+            {
                 e1.printStackTrace();
             }
 
@@ -81,21 +86,28 @@ public class downnewsFragment extends Fragment {
             switch (msg.what) {
                 case 0:
                     try {
-                        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+                        mData=new LinkedList<>();
                         int i=0;
                         for (Element e : es) {
 
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("title",String.valueOf(++i)+": "+ e.getElementsByClass("c_tit").tagName("a").text());
-                            map.put("href",  e.getElementsByTag("a").attr("href"));
-                            list.add(map);
+                            String h=e.text();
+                            if(h.startsWith("["))
+                            {
+                                Element ee=e.getElementsByTag("a").get(1);
+                                String num=e.select("div.dd_lm").text();
+                                String title=e.select("div.dd_bt").text();
+                                Log.i("handleMessage: ",num+"#"+title);
+                                mData.add(new Lesson_data(ee.attr("href"),num,title,e.select("div.dd_time").text(),++i));
+                               /* map.put("type" ,e.select("div.dd_lm").text());
+                                map.put("title" ,e.select("div.dd_lm").text());
+                                map.put("href",  ee.attr("href"));*/
+                            }
+
+
                         }
 
-
-                        downnewslist.setAdapter(new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
-                                new String[] { "title","href" }, new int[] {
-                                android.R.id.text1,android.R.id.text2
-                        }));
+                         downnewsAdapter dadapter=new downnewsAdapter((LinkedList<Lesson_data>) mData,getActivity());
+                         downnewslist.setAdapter(dadapter);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -105,5 +117,6 @@ public class downnewsFragment extends Fragment {
             super.handleMessage(msg);
         }
     };
+
 
 }

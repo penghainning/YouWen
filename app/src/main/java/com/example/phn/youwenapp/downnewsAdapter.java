@@ -1,7 +1,6 @@
 package com.example.phn.youwenapp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,12 @@ import java.util.LinkedList;
 /**
  * Created by PHN on 2016/7/9.
  */
-public class movieAdapter extends BaseAdapter {
+public class downnewsAdapter extends BaseAdapter {
 
     private LinkedList<Lesson_data> mData;
     private Context mContext;
     private ViewHolder holder = null;
-    public movieAdapter(LinkedList<Lesson_data>mData, Context mContext)
+    public downnewsAdapter(LinkedList<Lesson_data>mData, Context mContext)
     {
         this.mContext=mContext;
         this.mData=mData;
@@ -37,20 +36,20 @@ public class movieAdapter extends BaseAdapter {
 
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.moviedata_layout, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.downnewslist_laout, parent, false);
             holder = new ViewHolder();
-            holder.movie_number = (TextView) convertView.findViewById(R.id.movie_number);
-            holder.movie_title = (TextView) convertView.findViewById(R.id.movie_title);
-            holder.movie_visit = (TextView) convertView.findViewById(R.id.movie_visit);
+            holder.downnumber = (TextView) convertView.findViewById(R.id.down_number);
+            holder.downtitle = (TextView) convertView.findViewById(R.id.down_title);
+            holder.downvisit = (TextView) convertView.findViewById(R.id.down_visit);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
 
-           holder.movie_number.setText(mData.get(position).getNumber());
-           holder.movie_title.setText(mData.get(position).getTitle());
-          holder.movie_visit.setText(mData.get(position).getVisit());
+           holder.downnumber.setText(mData.get(position).getNumber());
+           holder.downtitle.setText(mData.get(position).getTitle());
+          holder.downvisit.setText(mData.get(position).getVisit());
 
 
 
@@ -58,9 +57,9 @@ public class movieAdapter extends BaseAdapter {
 
     }
     static class ViewHolder{
-        TextView movie_number;
-        TextView movie_title;
-        TextView movie_visit;
+        TextView downnumber;
+        TextView downtitle;
+        TextView downvisit;
     }
 
 
