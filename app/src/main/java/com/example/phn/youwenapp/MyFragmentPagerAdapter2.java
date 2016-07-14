@@ -3,6 +3,7 @@ package com.example.phn.youwenapp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -12,9 +13,9 @@ import android.view.ViewGroup;
 public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
    /*声明10个页面*/
     private final int PAGER_COUNT = 8;
+    private FragmentManager fm;
     private downnewsFragment downnewsf =null;
-    private soundFragment soundf=null;
-    private soundFragment2 soundf2=null;
+    private Fragment soundf=null;
     private  marketFragment marketf=null;
     private petFragment petf=null;
     private storeFragment storef=null;
@@ -25,17 +26,21 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
 
     public MyFragmentPagerAdapter2(FragmentManager fm) {
         super(fm);
+        this.fm=fm;
         downnewsf=new downnewsFragment();
         marketf=new marketFragment();
         storef=new storeFragment();
         petf=new petFragment();
         jokef=new jokeFragment();
         soundf=new soundFragment();
-        soundf2=new soundFragment2();
         favourf=new favourFragment();
         personf=new personFragment();
 
 
+    }
+    public void setsoundfragment(Fragment f)
+    {
+        this.soundf=f;
     }
 
 
@@ -46,13 +51,28 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
 
     @Override
         public Object instantiateItem(ViewGroup vg, int position) {
-            return super.instantiateItem(vg, position);
+        Fragment fragment = (Fragment) super.instantiateItem(vg, position);
+       if (MainActivity.type==1&&position==1)
+        {
+
+            String fragmentTag = fragment.getTag();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(fragment);
+            fragment=new soundFragment2();
+            ft.add(vg.getId(), fragment, fragmentTag);
+            ft.attach(fragment);
+            ft.commit();
+            MainActivity.type=0;
+        }
+        Log.i("instantiateItem: ",String.valueOf(position)+"#"+fragment.getTag());
+      return fragment;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             System.out.println("position Destory" + position);
-
+            if(position==1)
+                soundf=new soundFragment2();
             super.destroyItem(container, position, object);
         }
 
@@ -65,10 +85,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                     fragment = downnewsf;
                     break;
                 case MainActivity.DOWN_TWO:
-                    Log.i("soundtype", String.valueOf(MainActivity.type));
-                    if(MainActivity.type==1)
-                        fragment=soundf2;
-                    else
+                    Log.i("type", String.valueOf(MainActivity.type));
                         fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:

@@ -47,10 +47,20 @@ public class movieAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-
-           holder.movie_number.setText(mData.get(position).getNumber());
-           holder.movie_title.setText(mData.get(position).getTitle());
-          holder.movie_visit.setText(mData.get(position).getVisit());
+          if(mData.get(position).getId()<4)
+          {
+              holder.movie_number.setBackgroundResource(R.drawable.movie_number);
+              holder.movie_number.setText(mData.get(position).getNumber());
+              holder.movie_title.setText(mData.get(position).getTitle());
+              holder.movie_visit.setText(mData.get(position).getVisit());
+          }
+        else
+          {
+              holder.movie_number.setBackgroundResource(R.drawable.lesson_number);
+              holder.movie_number.setText(mData.get(position).getNumber());
+              holder.movie_title.setText(mData.get(position).getTitle());
+              holder.movie_visit.setText(mData.get(position).getVisit());
+          }
 
 
 

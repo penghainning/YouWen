@@ -86,7 +86,7 @@ public class newsFragment extends Fragment {
                 if(n==0)
                 {
                     doc = Jsoup.parse(new URL("http://news.qq.com/"), 5000);
-                    es = doc.select("div.text>em.f14*");
+                    es = doc.select("div.text>em.f14*,div.text>ul>li");
 
                 }
                 else if(n==1)

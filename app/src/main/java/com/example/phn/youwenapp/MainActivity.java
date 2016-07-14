@@ -117,6 +117,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         break;
                     case 101:
                         type=1;
+                      //  soundFragment2 s2=new soundFragment2();
+                       // mAdapter2.setsoundfragment(s2);
+                        //down_viewpager.setAdapter(mAdapter2);
                         break;
                     case 102:
                         fManager.popBackStack();

@@ -4,8 +4,9 @@
     android:layout_height="match_parent">
 <TextView
     android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:gravity="left"
+    android:layout_height="50dp"
+    android:gravity="center|left"
+    android:layout_gravity="center"
     android:text="dhsadsakdhsakdshkadshkjadhjsak"
     android:id="@+id/text1"
     android:singleLine="true"

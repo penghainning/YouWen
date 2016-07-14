@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class carFragment extends Fragment {//汽车栏具体界面
         setSettings(setting);
         carwebview.setWebChromeClient(new WebChromeClient());
         carwebview.setWebViewClient(new WebViewClient());
-        carwebview.loadUrl("http://auto.sohu.com/");
+        carwebview.loadUrl("http://db.auto.sohu.com/searchcar.shtml");
         //new Thread(new load()).start();
         return view;
     }
@@ -86,7 +87,7 @@ public class carFragment extends Fragment {//汽车栏具体界面
         public void run() {
             try {
 
-                    doc = Jsoup.parse(new URL("https://www.baidu.com/"), 5000);
+                    doc = Jsoup.parse(new URL("http://auto.sohu.com/"), 5000);
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
@@ -104,7 +105,9 @@ public class carFragment extends Fragment {//汽车栏具体界面
             switch (msg.what) {
                 case 0:
                     try {
-                      carwebview.loadData(doc.outerHtml(),"text/html","utf-8");
+                        Log.i("carview",doc.select("div").html());
+                      carwebview.loadData(doc.html(),"text/html","utf-8");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
