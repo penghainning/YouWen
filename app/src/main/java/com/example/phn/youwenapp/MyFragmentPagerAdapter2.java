@@ -16,6 +16,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
     private FragmentManager fm;
     private downnewsFragment downnewsf =null;
     private Fragment soundf=null;
+    private Fragment soundf2=null;
     private  marketFragment marketf=null;
     private petFragment petf=null;
     private storeFragment storef=null;
@@ -33,6 +34,7 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         petf=new petFragment();
         jokef=new jokeFragment();
         soundf=new soundFragment();
+        soundf2=new soundFragment2();
         favourf=new favourFragment();
         personf=new personFragment();
 
@@ -89,19 +91,24 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                         fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:
-                    fragment = marketf;
+                    //fragment = marketf;
+                    fragment=new soundFragment2();
                     break;
                 case MainActivity.DOWN_FOUR:
-                    fragment = petf;
+                   // fragment = petf;
+                    fragment=new soundFragment2();
                 break;
             case MainActivity.DOWN_FIVE:
-                fragment = storef;
+               //fragment = storef;
+                fragment=new soundFragment2();
                 break;
             case MainActivity.DOWN_SIX:
-                fragment = jokef;
+                //fragment = jokef;
+                fragment=new downnewsFragment();
                 break;
             case MainActivity.DOWN_SEVEN:
-                fragment = favourf;
+               // fragment = favourf;
+                fragment=new downnewsFragment();
                 break;
             case MainActivity.DOWN_EIGHT:
                 fragment = personf;

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,6 +41,7 @@ public class soundFragment2 extends Fragment {
     RadioGroup citiselect;
     RadioButton city1;
     RadioButton city2;
+    LinearLayout bottom;
     ProgressDialog progress;
     List<Map<String, String>> list;
     public soundFragment2() {
@@ -50,6 +52,13 @@ public class soundFragment2 extends Fragment {
         soundlist=(ListView)view.findViewById(R.id.soundlist);
         city1=(RadioButton)view.findViewById(R.id.city1);
         city2=(RadioButton)view.findViewById(R.id.city2);
+        bottom=(LinearLayout)view.findViewById(R.id.bottom);
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.sendEmptyMessage(103);
+            }
+        });
         list = new ArrayList<Map<String, String>>();
         citiselect=(RadioGroup)view.findViewById(R.id.citiselect);
         citiselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

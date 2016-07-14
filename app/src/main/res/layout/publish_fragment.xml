@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="标题:"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:gravity="center|left"
+            android:background="@drawable/et3"
+            android:layout_weight="0" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:id="@+id/publishtitle"
+            android:background="@drawable/et3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight="11"
+        android:layout_height="0dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:hint="\n注意:\n 1、您所发表的内容必须真实有效\n 2、您所发的内容所有法律责任将由您自己承担\n 3、如果您所发送的内容不符合规范我们将不予以显示"
+            android:id="@+id/publishcontent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/publishpovince">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/publishcity">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/publishdistrict">
+        </Spinner>
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/publishtown">
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="添加"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:background="@drawable/et3"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="图片"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:background="@drawable/et3"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="证实"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:background="@drawable/et3"
+            android:layout_weight="1" />
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/publishmodule">
+        </Spinner>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="取消"
+            android:id="@+id/publishcancel"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="发送"
+            android:id="@+id/publishsend"/>
+
+    </LinearLayout>
+</LinearLayout>

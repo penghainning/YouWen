@@ -40,7 +40,19 @@
         android:background="@drawable/button_setting"
         android:text="汕尾" />
 </RadioGroup>
-
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_gravity="bottom|center"
+         android:background="#EEEE00"
+         android:id="@+id/bottom"
+         android:layout_height="wrap_content">
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center"
+         android:textColor="#000000"
+         android:text="我要发布：点击此处您可以发布您所知道的消息" />
+     </LinearLayout>
 
  </FrameLayout>
 </LinearLayout>

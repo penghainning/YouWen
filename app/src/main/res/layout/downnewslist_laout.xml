@@ -11,7 +11,6 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="20dp"
-            android:textColor="#686868"
             android:text="[国内]"
             android:id="@+id/down_number"
             android:gravity="center" />
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="4"
-            android:textColor="#686868"
+            android:textColor="#3A5FCD"
             android:paddingLeft="15dp"
             android:text="讲座：乔布斯演讲"
             android:maxEms="15"

@@ -63,6 +63,19 @@
         <item>市</item>
     </string-array>
 
+    <string-array name="district">
+        <item>县</item>
+    </string-array>
+    <string-array name="town">
+        <item>镇</item>
+    </string-array>
+
+    <string-array name="module">
+        <item>地区民声</item>
+        <item>二手市场</item>
+        <item>宠物</item>
+        <item>新店开张</item>
+    </string-array>
 
     <string-array name="shape">
         <item>选择车型</item>

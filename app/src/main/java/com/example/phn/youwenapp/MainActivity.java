@@ -117,12 +117,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         break;
                     case 101:
                         type=1;
-                      //  soundFragment2 s2=new soundFragment2();
-                       // mAdapter2.setsoundfragment(s2);
-                        //down_viewpager.setAdapter(mAdapter2);
                         break;
                     case 102:
                         fManager.popBackStack();
+                        break;
+                    case 103:
+                        publishFragment publishf=new publishFragment();
+                        if(fManager.getBackStackEntryCount() != 0)
+                            fManager.popBackStack();
+                        ft = fManager.beginTransaction();
+                        ft.replace(R.id.webreplace,publishf);
+                        ft.addToBackStack(null);
+                        ft.commit();
                         break;
                     case 88:
                         Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
