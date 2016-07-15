@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private MyFragmentPagerAdapter mAdapter;
     private MyFragmentPagerAdapter2 mAdapter2;
     private HorizontalScrollView hv;
+    private FrameLayout fl;
     private FragmentManager fManager = null;
     private FragmentTransaction ft=null;
     private searchFragment searchf=null;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         width=dm.widthPixels/6;
         fManager=getSupportFragmentManager();
+        fl=(FrameLayout)findViewById(R.id.webreplace);
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         mAdapter2 = new MyFragmentPagerAdapter2(getSupportFragmentManager());
         bindViews();
@@ -119,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         type=1;
                         break;
                     case 102:
+                        if(up_viewpager.getVisibility()==View.GONE)
+                            up_viewpager.setVisibility(View.VISIBLE);
+                        searchText.setText("");
                         fManager.popBackStack();
                         break;
                     case 103:
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                             fManager.popBackStack();
                         ft = fManager.beginTransaction();
                         ft.replace(R.id.webreplace,publishf);
+                        up_viewpager.setVisibility(View.GONE);
                         ft.addToBackStack(null);
                         ft.commit();
                         break;
@@ -302,6 +308,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
     }
     public void onBackPressed() {
+        if(up_viewpager.getVisibility()==View.GONE)
+           up_viewpager.setVisibility(View.VISIBLE);
         super.onBackPressed();
     }
     public void mySearch()
@@ -315,14 +323,15 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             String text=searchText.getText().toString();
             mediaurl="https://www.baidu.com/s?wd="+text;
             searchf=new searchFragment(mediaurl);
-            if(fManager.getBackStackEntryCount() != 0)
-                fManager.popBackStack();
             ft = fManager.beginTransaction();
+            if(fManager.findFragmentByTag("search")!= null)
+            {
+                fManager.popBackStack();
+            }
+
             ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,
-                    R.anim.fragment_slide_out_to_top,
-                    R.anim.fragment_slide_in_from_top,
                     R.anim.fragment_slide_out_to_top);
-            ft.replace(R.id.webreplace,searchf);
+            ft.replace(R.id.webreplace,searchf,"search");
             ft.addToBackStack(null);
             ft.commit();
 

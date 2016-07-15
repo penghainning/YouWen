@@ -50,7 +50,6 @@ public class searchFragment extends Fragment {
         });
         searchwebView.setWebChromeClient(new WebChromeClient());
         searchwebView.setWebViewClient(new WebViewClient());
-        Document doc;
 
         searchwebView.loadUrl(weburl);
         WebSettings setting = searchwebView.getSettings();

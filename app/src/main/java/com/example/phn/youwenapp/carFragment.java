@@ -1,5 +1,7 @@
 package com.example.phn.youwenapp;
 
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,8 +31,6 @@ public class carFragment extends Fragment {//汽车栏具体界面
     private Spinner car_shape;
     private Spinner car_break;
     private WebView carwebview;
-    Document doc;
-    String h;
     public carFragment() {
     }
 
@@ -43,8 +43,39 @@ public class carFragment extends Fragment {//汽车栏具体界面
         WebSettings setting = carwebview.getSettings();
         setSettings(setting);
         carwebview.setWebChromeClient(new WebChromeClient());
-        carwebview.setWebViewClient(new WebViewClient());
-        carwebview.loadUrl("http://db.auto.sohu.com/searchcar.shtml");
+        carwebview.setWebViewClient(new WebViewClient()  {
+            ProgressDialog progress;
+            public boolean shouldOverrideUrlLoading(WebView view, String url)
+            {
+                //Toast.makeText(MainActivity.this,webview.getUrl(),Toast.LENGTH_SHORT).show();
+                view.loadUrl(url);
+                Log.i("should",view.getUrl());
+                return true;
+            }
+
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if(url!=null && url.contains("http://mobile.auto.sohu.com/")){
+
+
+                    String fun="javascript:function getClass(parent,sClass) { var aEle=parent.getElementsByTagName('div'); var aResult=[]; var i=0; for(i<0;i<aEle.length;i++) { if(aEle[i].className==sClass) { aResult.push(aEle[i]); } }; return aResult; } ";
+
+                    view.loadUrl(fun);
+
+                    String fun2="javascript:function hideOther() {getClass(document,'TB2014head')[0].style.display='none';getClass(document,'TB2014head')[0].style.display='none';getClass(document,'head')[0].style.display='none';getClass(document,'main')[0].style.display='none';getClass(document,'TB2014head')[0].style.display='none';getClass(document,'linknav area')[0].style.display='none';getClass(document,'Area')[0].style.display='none';getClass(document,'linknav area')[0].style.display='none';}";
+
+                    view.loadUrl(fun2);
+
+                    view.loadUrl("javascript:hideOther();");
+
+
+                }
+                super.onPageFinished(view, url);
+            }
+
+        });
+        carwebview.loadUrl("http://auto.sohu.com/");
         //new Thread(new load()).start();
         return view;
     }
@@ -83,39 +114,6 @@ public class carFragment extends Fragment {//汽车栏具体界面
         });
 
     }
-    class load extends Thread {//接受服务器信息的线程
-        public void run() {
-            try {
-
-                    doc = Jsoup.parse(new URL("http://auto.sohu.com/"), 5000);
-            } catch (MalformedURLException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            Message msg = new Message();
-            msg.what = 0;
-            myHandler.sendMessage(msg);
-
-        }
-    }
-
-    Handler myHandler = new Handler() {
-        public void handleMessage(Message msg) {    //接受服务器信息更新UI
-            switch (msg.what) {
-                case 0:
-                    try {
-                        Log.i("carview",doc.select("div").html());
-                      carwebview.loadData(doc.html(),"text/html","utf-8");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
     private void setSettings(WebSettings setting) {
         setting.setJavaScriptEnabled(true);
         setting.setPluginState(WebSettings.PluginState.ON);
@@ -153,7 +151,7 @@ public class carFragment extends Fragment {//汽车栏具体界面
         else if(n==3)
             carurl="http://daima.weizhangwang.com/";
 
-        return carurl;
+        return "http://mobile.auto.sohu.com/wzcx/mainPage.at";
 
     }
 }
