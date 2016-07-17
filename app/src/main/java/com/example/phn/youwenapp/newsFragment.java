@@ -85,8 +85,8 @@ public class newsFragment extends Fragment {
             try {
                 if(n==0)
                 {
-                    doc = Jsoup.parse(new URL("http://news.qq.com/"), 5000);
-                    es = doc.select("div.text>em.f14*,div.text>ul>li");
+                    doc = Jsoup.parse(new URL("http://news.v1.cn/"), 5000);
+                    es = doc.select("div.content1_c*,div.bottomA,div.imgDec");
 
                 }
                 else if(n==1)
@@ -103,6 +103,7 @@ public class newsFragment extends Fragment {
             }
 
             Message msg = new Message();
+            if(n==1)
             msg.what = 0;
             myHandler.sendMessage(msg);
 
@@ -117,10 +118,16 @@ public class newsFragment extends Fragment {
                         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
                         int i=0;
                         for (Element e : es) {
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("title", String.valueOf(++i)+" :"+e.getElementsByTag("a").text());
-                            map.put("href", e.getElementsByTag("a").attr("href"));
-                            list.add(map);
+                            if(i<45)
+                            {
+                                Map<String, String> map = new HashMap<String, String>();
+                                map.put("title", e.getElementsByTag("a").text());
+                                map.put("href", e.getElementsByTag("a").attr("href"));
+                                list.add(map);
+                                i++;
+                            }
+                            else
+                                break;
                         }
 
 

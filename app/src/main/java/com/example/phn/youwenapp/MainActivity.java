@@ -190,60 +190,60 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         switch (checkedId) {
 
             case R.id.car:
-                up_viewpager.setCurrentItem(UP_ONE);
+                up_viewpager.setCurrentItem(UP_ONE,false);
                 break;
             case R.id.news:
-                up_viewpager.setCurrentItem(UP_TWO);
+                up_viewpager.setCurrentItem(UP_TWO,false);
                 break;
             case R.id.movie:
-                up_viewpager.setCurrentItem(UP_THREE);
+                up_viewpager.setCurrentItem(UP_THREE,false);
                 break;
             case R.id.sports:
-                up_viewpager.setCurrentItem(UP_FOUR);
+                up_viewpager.setCurrentItem(UP_FOUR,false);
                 break;
             case R.id.lesson:
-                up_viewpager.setCurrentItem(UP_FIVE);
+                up_viewpager.setCurrentItem(UP_FIVE,false);
                 break;
             case R.id.down_news:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_ONE);
+                down_viewpager.setCurrentItem(DOWN_ONE,false);
                 break;
             case R.id.sound:
                 if(fManager.getBackStackEntryCount() != 0)
 
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_TWO);
+                down_viewpager.setCurrentItem(DOWN_TWO,false);
                 break;
             case R.id.market:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_THREE);
+                down_viewpager.setCurrentItem(DOWN_THREE,false);
                 break;
             case R.id.pet:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_FOUR);
+                down_viewpager.setCurrentItem(DOWN_FOUR,false);
                 break;
             case R.id.store:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_FIVE);
+                down_viewpager.setCurrentItem(DOWN_FIVE,false);
                 break;
             case R.id.joke:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_SIX);
+                down_viewpager.setCurrentItem(DOWN_SIX,false);
                 break;
             case R.id.favour:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_SEVEN);
+                down_viewpager.setCurrentItem(DOWN_SEVEN,false);
                 break;
             case R.id.person:
                 if(fManager.getBackStackEntryCount() != 0)
                     fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_EIGHT);
+                down_viewpager.setCurrentItem(DOWN_EIGHT,false);
                 break;
         }
     }

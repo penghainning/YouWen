@@ -24,7 +24,7 @@
         android:layout_height="35dp"
         android:layout_width="50dp"
         android:gravity="center"
-        android:textColor="#ff0000"
+        android:textColor="#7fff0000"
         android:background="@drawable/sound_press"
         android:button="@null"
         android:text="深圳" />
@@ -35,23 +35,10 @@
         android:layout_width="50dp"
         android:button="@null"
         android:background="@drawable/sound_press"
-        android:textColor="#ff0000"
+        android:textColor="#7fff0000"
         android:text="汕尾" />
 </RadioGroup>
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_gravity="bottom|center"
-         android:gravity="center"
-         android:background="#EEEE00"
-         android:id="@+id/bottom"
-         android:layout_height="35dp">
-     <TextView
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:gravity="center"
-         android:textColor="#000000"
-         android:text="我要发布：点击此处您可以发布您所知道的消息" />
-     </LinearLayout>
+ <include layout="@layout/bottom_layout"/>
 
  </FrameLayout>
 </LinearLayout>

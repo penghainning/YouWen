@@ -53,12 +53,6 @@ public class soundFragment2 extends Fragment {
         city1=(RadioButton)view.findViewById(R.id.city1);
         city2=(RadioButton)view.findViewById(R.id.city2);
         bottom=(LinearLayout)view.findViewById(R.id.bottom);
-        bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.sendEmptyMessage(103);
-            }
-        });
         list = new ArrayList<Map<String, String>>();
         citiselect=(RadioGroup)view.findViewById(R.id.citiselect);
         citiselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -79,6 +73,12 @@ public class soundFragment2 extends Fragment {
         }});
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.sendEmptyMessage(103);
+            }
+        });
         new Thread(new load(1)).start();
         soundlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

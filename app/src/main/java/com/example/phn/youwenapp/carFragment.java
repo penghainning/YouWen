@@ -75,7 +75,7 @@ public class carFragment extends Fragment {//汽车栏具体界面
             }
 
         });
-        carwebview.loadUrl("http://auto.sohu.com/");
+        //carwebview.loadUrl("http://auto.sohu.com/");
         //new Thread(new load()).start();
         return view;
     }

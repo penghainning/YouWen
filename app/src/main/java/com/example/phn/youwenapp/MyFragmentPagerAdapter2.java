@@ -91,24 +91,19 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                         fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:
-                    //fragment = marketf;
-                    fragment=new soundFragment2();
+                    fragment = marketf;
                     break;
                 case MainActivity.DOWN_FOUR:
-                   // fragment = petf;
-                    fragment=new soundFragment2();
+                   fragment = petf;
                 break;
             case MainActivity.DOWN_FIVE:
-               //fragment = storef;
-                fragment=new soundFragment2();
+               fragment = storef;
                 break;
             case MainActivity.DOWN_SIX:
-                //fragment = jokef;
-                fragment=new downnewsFragment();
+                fragment = jokef;
                 break;
             case MainActivity.DOWN_SEVEN:
-               // fragment = favourf;
-                fragment=new downnewsFragment();
+               fragment = favourf;
                 break;
             case MainActivity.DOWN_EIGHT:
                 fragment = personf;
