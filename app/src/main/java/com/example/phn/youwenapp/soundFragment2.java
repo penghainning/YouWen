@@ -174,6 +174,7 @@ public class soundFragment2 extends Fragment {
                                 new String[] { "title","href" }, new int[] {
                                 android.R.id.text1,android.R.id.text2
                         }));
+                        if(progress!=null)
                         progress.dismiss();
 
                     } catch (Exception e) {

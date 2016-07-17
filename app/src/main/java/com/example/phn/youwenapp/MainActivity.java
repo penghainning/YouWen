@@ -329,8 +329,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 fManager.popBackStack();
             }
 
-            ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,
-                    R.anim.fragment_slide_out_to_top);
+            ft.setCustomAnimations(R.anim.fragment_slide_in_from_top,R.anim.fragment_slide_out_to_top,R.anim.fragment_slide_in_from_top,R.anim.fragment_slide_out_to_top);
             ft.replace(R.id.webreplace,searchf,"search");
             ft.addToBackStack(null);
             ft.commit();

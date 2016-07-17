@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">YouWenApp</string>
-    <drawable name="clr_normal">#3A5FCD</drawable>
-    <drawable name="clr_pressed">#3F51B5</drawable>
+    <drawable name="clr_normal">#5fd4d4d4</drawable>
+    <drawable name="clr_pressed">#d4d4d4</drawable>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -7,11 +7,14 @@
     android:weightSum="3"
     tools:context="com.example.phn.youwenapp.MainActivity">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:weightSum="5"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -19,7 +22,7 @@
         android:layout_centerHorizontal="true">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="5"
             android:singleLine="true"
             android:imeOptions="actionSearch"
@@ -27,8 +30,7 @@
             android:background="@drawable/et3" />
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:text="百度一下"
+            android:layout_height="match_parent"
             android:background="@drawable/button_press"
             android:id="@+id/search" />
     </LinearLayout>
@@ -44,7 +46,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_weight="1.5">
 
 
 
@@ -58,7 +60,7 @@
              android:id="@+id/car"
              android:checked="true"
              android:layout_weight="1"
-             android:layout_height="30dp"
+             android:layout_height="35dp"
              android:gravity="center"
              android:button="@null"
              android:layout_width="0dp"
@@ -66,7 +68,7 @@
              android:text="汽车" />
          <RadioButton
              android:id="@+id/news"
-             android:layout_height="30dp"
+             android:layout_height="35dp"
              android:gravity="center"
              android:layout_width="0dp"
              android:layout_weight="1"
@@ -75,7 +77,7 @@
              android:text="新闻" />
          <RadioButton
              android:id="@+id/movie"
-             android:layout_height="30dp"
+             android:layout_height="35dp"
              android:gravity="center"
              android:layout_weight="1"
              android:layout_width="0dp"
@@ -84,7 +86,7 @@
              android:text="影视" />
          <RadioButton
              android:id="@+id/sports"
-             android:layout_height="30dp"
+             android:layout_height="35dp"
              android:gravity="center"
              android:layout_width="0dp"
              android:button="@null"
@@ -94,7 +96,7 @@
          <RadioButton
              android:id="@+id/lesson"
              android:layout_weight="1"
-             android:layout_height="30dp"
+             android:layout_height="35dp"
              android:layout_width="0dp"
              android:button="@null"
              android:background="@drawable/button_setting"
@@ -116,9 +118,15 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:id="@+id/webreplace2">
-<FrameLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/moveable">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
 <HorizontalScrollView
     android:layout_width="match_parent"
     android:id="@+id/hv"
@@ -199,18 +207,16 @@
 
         </RadioGroup>
 </HorizontalScrollView>
-</FrameLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/moveable">
+
         <android.support.v4.view.ViewPager
             android:id="@+id/down_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v4.view.ViewPager>
+            </LinearLayout>
         </FrameLayout>
     </LinearLayout>
     </LinearLayout>
     </FrameLayout>
+</LinearLayout>
 </LinearLayout>
