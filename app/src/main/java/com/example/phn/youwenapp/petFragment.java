@@ -34,12 +34,12 @@ public class petFragment extends Fragment {
         bottom=(LinearLayout)view.findViewById(R.id.bottom);
         petlist=(ListView)view.findViewById(R.id.petlist);
         list = new ArrayList<Map<String, String>>();
-        for(int i=0;i<5;i++)
+       /* for(int i=0;i<5;i++)
         {
             Map<String, String> m=new HashMap<>();
             m.put("title","用户发布的宠物消息。");
             list.add(m);
-        }
+        }*/
         petAdapter=new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
                 new String[] { "title","href" }, new int[] {
                 android.R.id.text1,android.R.id.text2});

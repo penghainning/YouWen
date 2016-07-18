@@ -23,6 +23,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener  {
 
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg!=null){
+                Bundle bundle=msg.getData();
                 switch (msg.what) {
                     case 100://查看新闻、体育、公开课、影视、
                         Log.i("Main_lessonurl",mediaurl);
@@ -149,6 +153,43 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         ft.addToBackStack(null);
                         ft.commit();
                         break;
+                    case 105://发布地区民生
+                        soundFragment2 s2=(soundFragment2) down_viewpager.getAdapter().instantiateItem(down_viewpager,1);
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("title",bundle.getString("title"));
+                        map.put("content",bundle.getString("content"));
+                        s2.loaddata(map);
+                        Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                        break;
+                    case 106://发布二手市场
+                        marketFragment market=(marketFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,2);
+                        Map<String, String> map2= new HashMap<String, String>();
+                        map2.put("title",bundle.getString("title"));
+                        map2.put("content",bundle.getString("content"));
+                        market.loaddata(map2);
+                        Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                        break;
+                    case 107://发布宠物
+                        Map<String, String> map3= new HashMap<String, String>();
+                        map3.put("title",bundle.getString("title"));
+                        map3.put("content",bundle.getString("content"));
+                        petFragment pet=(petFragment)down_viewpager.getAdapter().instantiateItem(down_viewpager,3);
+                        pet.loaddata(map3);
+                        Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                        break;
+                    case 108://发布新店开张
+                        Map<String, String> map4= new HashMap<String, String>();
+                        map4.put("title",bundle.getString("title"));
+                        map4.put("content",bundle.getString("content"));
+                        storeFragment store=(storeFragment)down_viewpager.getAdapter().instantiateItem(down_viewpager,4);
+                        store.loaddata(map4);
+                        Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                        break;
+
 
                     case 88://网络异常
                         Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
@@ -194,6 +235,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         down_viewpager.setAdapter(mAdapter2);
         up_viewpager.setCurrentItem(0);
         down_viewpager.setCurrentItem(0);
+        down_viewpager.setOffscreenPageLimit(7);
+        up_viewpager.setOffscreenPageLimit(4);
         up_tab.setOnCheckedChangeListener(this);
         down_tab.setOnCheckedChangeListener(this);
         up_viewpager.addOnPageChangeListener(this);

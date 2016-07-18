@@ -44,6 +44,7 @@ public class soundFragment2 extends Fragment {
     LinearLayout bottom;
     ProgressDialog progress;
     List<Map<String, String>> list;
+    SimpleAdapter adapter;
     public soundFragment2() {
     }
 
@@ -54,6 +55,9 @@ public class soundFragment2 extends Fragment {
         city2=(RadioButton)view.findViewById(R.id.city2);
         bottom=(LinearLayout)view.findViewById(R.id.bottom);
         list = new ArrayList<Map<String, String>>();
+        adapter=new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
+                new String[] { "title","href" }, new int[] {android.R.id.text1,android.R.id.text2});
+        soundlist.setAdapter(adapter);
         citiselect=(RadioGroup)view.findViewById(R.id.citiselect);
         citiselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -169,11 +173,7 @@ public class soundFragment2 extends Fragment {
 
                         }
 
-
-                        soundlist.setAdapter(new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
-                                new String[] { "title","href" }, new int[] {
-                                android.R.id.text1,android.R.id.text2
-                        }));
+                        adapter.notifyDataSetChanged();
                         if(progress!=null)
                         progress.dismiss();
 
@@ -185,5 +185,10 @@ public class soundFragment2 extends Fragment {
             super.handleMessage(msg);
         }
     };
+    public void loaddata(Map<String, String>m)
+    {
+        list.add(m);
+        adapter.notifyDataSetChanged();
 
+    }
 }
