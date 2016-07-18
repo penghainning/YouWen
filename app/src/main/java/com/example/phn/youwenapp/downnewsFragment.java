@@ -49,7 +49,7 @@ public class downnewsFragment extends Fragment {
                 Lesson_data d=(Lesson_data)downnewslist.getAdapter().getItem(position);
                 Log.i("url",d.getLessonurl());
                 MainActivity.mediaurl=d.getLessonurl();
-                handler.sendEmptyMessage(100);
+                handler.sendEmptyMessage(104);
             }
         });
         return view;
@@ -98,9 +98,6 @@ public class downnewsFragment extends Fragment {
                                 String title=e.select("div.dd_bt").text();
                                 Log.i("handleMessage: ",num+"#"+title);
                                 mData.add(new Lesson_data(ee.attr("href"),num,title,e.select("div.dd_time").text(),++i));
-                               /* map.put("type" ,e.select("div.dd_lm").text());
-                                map.put("title" ,e.select("div.dd_lm").text());
-                                map.put("href",  ee.attr("href"));*/
                             }
 
 

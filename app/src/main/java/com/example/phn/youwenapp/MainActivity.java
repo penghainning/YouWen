@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             super.handleMessage(msg);
             if(msg!=null){
                 switch (msg.what) {
-                    case 100:
+                    case 100://查看新闻、体育、公开课、影视、
                         Log.i("Main_lessonurl",mediaurl);
-                        mediaFragment mediaf=new mediaFragment(mediaurl);
+                        mediaFragment mediaf=new mediaFragment(mediaurl,1);
                         if(fManager.getBackStackEntryCount() != 0)
                             fManager.popBackStack();
                         ft = fManager.beginTransaction();
@@ -117,26 +117,40 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         ft.addToBackStack(null);
                         ft.commit();
                         break;
-                    case 101:
+                    case 101://地区民声选择了地区
                         type=1;
                         break;
-                    case 102:
+                    case 102://收起按钮及返回
                         if(up_viewpager.getVisibility()==View.GONE)
                             up_viewpager.setVisibility(View.VISIBLE);
+                        if(down_viewpager.getVisibility()==View.GONE)
+                            down_viewpager.setVisibility(View.VISIBLE);
                         searchText.setText("");
                         fManager.popBackStack();
                         break;
-                    case 103:
+                    case 103://发布信息
                         publishFragment publishf=new publishFragment();
                         if(fManager.getBackStackEntryCount() != 0)
                             fManager.popBackStack();
                         ft = fManager.beginTransaction();
                         ft.replace(R.id.webreplace,publishf);
                         up_viewpager.setVisibility(View.GONE);
+                        down_viewpager.setVisibility(View.GONE);
                         ft.addToBackStack(null);
                         ft.commit();
                         break;
-                    case 88:
+                    case 104://点击文字新闻
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaFragment downmedia=new mediaFragment(mediaurl,2);
+                        if(fManager.getBackStackEntryCount() != 0)
+                            fManager.popBackStack();
+                        ft = fManager.beginTransaction();
+                        ft.replace(R.id.moveable,downmedia);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        break;
+
+                    case 88://网络异常
                         Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
                     default:
                         break;
@@ -310,6 +324,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     public void onBackPressed() {
         if(up_viewpager.getVisibility()==View.GONE)
            up_viewpager.setVisibility(View.VISIBLE);
+        if(down_viewpager.getVisibility()==View.GONE)
+            down_viewpager.setVisibility(View.VISIBLE);
         super.onBackPressed();
     }
     public void mySearch()

@@ -3,9 +3,69 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-   <WebView
-       android:id="@+id/webView"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+ <TableLayout
+     android:layout_width="match_parent"
+     android:layout_height="40dp"
+     android:layout_gravity="bottom"
+     android:id="@+id/newsfavour">
+    <TableRow>
+       <Button
+             android:id="@+id/btn01"
+             android:layout_height="match_parent"
+             android:layout_weight="3"
+             android:layout_width="0dp"
+             android:background="@drawable/downnews_press"
+             android:textColor="#ff0000"
+             android:text="我要评论" >
+         </Button>
+       <Button
+           android:id="@+id/btn02"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:background="@drawable/downnews_press"
+           android:textColor="#ff0000"
+           android:layout_height="match_parent"
+           android:text="收藏" >
+       </Button>
+       <Button
+           android:id="@+id/btn03"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:background="@drawable/downnews_press"
+           android:textColor="#ff0000"
+           android:layout_height="match_parent"
+           android:text="订阅" >
+       </Button>
+       <Button
+           android:id="@+id/btn04"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:background="@drawable/downnews_press"
+           android:textColor="#ff0000"
+           android:layout_height="match_parent"
+           android:text="转发" >
+       </Button>
+       <Button
+           android:id="@+id/btn05"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:background="@drawable/downnews_press"
+           android:textColor="#ff0000"
+           android:layout_height="match_parent"
+           android:text="返回" >
+       </Button>
+ </TableRow>
+
+ </TableLayout>
+
+
+</FrameLayout>
 </LinearLayout>

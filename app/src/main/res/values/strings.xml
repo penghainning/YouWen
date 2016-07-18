@@ -2,6 +2,7 @@
     <string name="app_name">YouWenApp</string>
     <drawable name="clr_normal">#5fd4d4d4</drawable>
     <drawable name="clr_pressed">#d4d4d4</drawable>
+    <drawable name="btr_pressed">#8B8378</drawable>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

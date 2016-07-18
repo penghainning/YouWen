@@ -4,11 +4,41 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="收藏订阅"
-        android:textSize="50sp"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/favourlist">
+
+        </ListView>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/favourselect"
+            android:focusable="true"
+            android:layout_gravity="center|top"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/city1"
+                android:checked="true"
+                android:layout_height="35dp"
+                android:layout_width="50dp"
+                android:gravity="center"
+                android:textColor="#7fff0000"
+                android:background="@drawable/sound_press"
+                android:button="@null"
+                android:text="收藏" />
+            <RadioButton
+                android:id="@+id/city2"
+                android:gravity="center"
+                android:layout_height="35dp"
+                android:layout_width="50dp"
+                android:button="@null"
+                android:background="@drawable/sound_press"
+                android:textColor="#7fff0000"
+                android:text="订阅" />
+        </RadioGroup>
+    </FrameLayout>
 </LinearLayout>

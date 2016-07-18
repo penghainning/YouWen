@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,12 @@ public class marketFragment  extends Fragment {
         bottom=(LinearLayout)view.findViewById(R.id.bottom);
         marketlist=(ListView)view.findViewById(R.id.marketlist);
         list = new ArrayList<Map<String, String>>();
+        for(int i=0;i<5;i++)
+        {
+            Map<String, String> m=new HashMap<>();
+            m.put("title","用户发布的二手市场消息。");
+            list.add(m);
+        }
         marketAdapter=new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
                 new String[] { "title","href" }, new int[] {
                 android.R.id.text1,android.R.id.text2});

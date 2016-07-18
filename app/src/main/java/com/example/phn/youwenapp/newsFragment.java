@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ public class newsFragment extends Fragment {
     Elements es;
     ListView newslist;
     Handler handler;
+    List<Map<String, String>> list2;
     public newsFragment() {
     }
 
@@ -65,7 +67,7 @@ public class newsFragment extends Fragment {
         news_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new Thread(new load(position)).start();
+               new Thread(new load(position)).start();
             }
 
             @Override
