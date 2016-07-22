@@ -181,14 +181,28 @@ public class soundFragment2 extends Fragment {
                         e.printStackTrace();
                     }
                     break;
+               /* case 1:
+                    Bundle bundle=msg.getData();
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("title",bundle.getString("title"));
+                    map.put("content",bundle.getString("content"));
+                    list.add(map);
+                    adapter.notifyDataSetChanged();*/
             }
             super.handleMessage(msg);
         }
     };
     public void loaddata(Map<String, String>m)
     {
-        list.add(m);
+       list.add(m);
         adapter.notifyDataSetChanged();
 
+       /* Message msg=new Message();
+        Bundle bundle=new Bundle();
+        bundle.putString("title",m.get("title"));
+        bundle.putString("content",m.get("content"));
+        msg.setData(bundle);
+        msg.what=1;
+        myHandler.sendMessage(msg);*/
     }
 }

@@ -12,16 +12,13 @@ import android.view.ViewGroup;
  */
 public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
    /*声明10个页面*/
-    private final int PAGER_COUNT = 8;
+    private final int PAGER_COUNT = 7;
     private FragmentManager fm;
     private downnewsFragment downnewsf =null;
     private Fragment soundf=null;
     private Fragment soundf2=null;
     private  marketFragment marketf=null;
-    private petFragment petf=null;
-    private storeFragment storef=null;
     private jokeFragment jokef=null;
-    private favourFragment favourf=null;
     private personFragment personf=null;
 
 
@@ -30,21 +27,13 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         this.fm=fm;
         downnewsf=new downnewsFragment();
         marketf=new marketFragment();
-        storef=new storeFragment();
-        petf=new petFragment();
         jokef=new jokeFragment();
         soundf=new soundFragment();
         soundf2=new soundFragment2();
-        favourf=new favourFragment();
         personf=new personFragment();
 
 
     }
-    public void setsoundfragment(Fragment f)
-    {
-        this.soundf=f;
-    }
-
 
     @Override
     public int getCount() {
@@ -66,7 +55,6 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
             ft.commit();
             MainActivity.type=0;
         }
-        Log.i("instantiateItem: ",String.valueOf(position)+"#"+fragment.getTag());
       return fragment;
         }
 
@@ -87,27 +75,23 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                     fragment = downnewsf;
                     break;
                 case MainActivity.DOWN_TWO:
-                    Log.i("type", String.valueOf(MainActivity.type));
                         fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:
-                    fragment = marketf;
+                    fragment = new petFragment();
                     break;
                 case MainActivity.DOWN_FOUR:
-                   fragment = petf;
+                   fragment = marketf;
                 break;
             case MainActivity.DOWN_FIVE:
-               fragment = storef;
+               fragment = new favourFragment();
                 break;
             case MainActivity.DOWN_SIX:
                 fragment = jokef;
                 break;
             case MainActivity.DOWN_SEVEN:
-               fragment = favourf;
+               fragment = personf;
                 break;
-            case MainActivity.DOWN_EIGHT:
-                fragment = personf;
-                break ;
         }
         return fragment;
     }

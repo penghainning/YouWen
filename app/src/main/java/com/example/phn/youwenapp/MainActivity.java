@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -43,10 +44,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private RadioButton downnews;
     private RadioButton sound;
     private RadioButton market;
-    private RadioButton pet;
-    private RadioButton store;
+    private RadioButton fun;
     private RadioButton joke;
-    private RadioButton favour;
+    private RadioButton carbreak;
     private RadioButton person;
     private ViewPager up_viewpager;
     private ViewPager down_viewpager;
@@ -71,15 +71,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     public static final int DOWN_FIVE = 4;
     public static final int DOWN_SIX = 5;
     public static final int DOWN_SEVEN = 6;
-    public static final int DOWN_EIGHT = 7;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DisplayMetrics  dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        width=dm.widthPixels/6;
         fManager=getSupportFragmentManager();
         fl=(FrameLayout)findViewById(R.id.webreplace);
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -114,12 +110,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     case 100://查看新闻、体育、公开课、影视、
                         Log.i("Main_lessonurl",mediaurl);
                         mediaFragment mediaf=new mediaFragment(mediaurl,1);
-                        if(fManager.getBackStackEntryCount() != 0)
-                            fManager.popBackStack();
-                        ft = fManager.beginTransaction();
-                        ft.replace(R.id.moveable,mediaf);
-                        ft.addToBackStack(null);
-                        ft.commit();
                         break;
                     case 101://地区民声选择了地区
                         type=1;
@@ -146,10 +136,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     case 104://点击文字新闻
                         Log.i("Main_lessonurl",mediaurl);
                         mediaFragment downmedia=new mediaFragment(mediaurl,2);
-                        if(fManager.getBackStackEntryCount() != 0)
-                            fManager.popBackStack();
-                        ft = fManager.beginTransaction();
-                        ft.replace(R.id.moveable,downmedia);
                         ft.addToBackStack(null);
                         ft.commit();
                         break;
@@ -203,6 +189,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     private void bindViews() {
 
+        WindowManager manager = this.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        width = outMetrics.widthPixels/5;
         searchText=(EditText)findViewById(R.id.searchtext);
         search=(Button)findViewById(R.id.search);
         up_tab=(RadioGroup)findViewById(R.id.up_tab);
@@ -218,14 +208,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         sound.setWidth(width);
         market=(RadioButton)findViewById(R.id.market);
         market.setWidth(width);
-        pet=(RadioButton)findViewById(R.id.pet);
-        pet.setWidth(width);
-        store=(RadioButton)findViewById(R.id.store);
-        store.setWidth(width);
+        fun=(RadioButton)findViewById(R.id.fun);
+        fun.setWidth(width);
         joke=(RadioButton)findViewById(R.id.joke);
         joke.setWidth(width);
-        favour=(RadioButton)findViewById(R.id.favour);
-        favour.setWidth(width);
+        carbreak=(RadioButton)findViewById(R.id.carbreak);
+        carbreak.setWidth(width);
         person=(RadioButton)findViewById(R.id.person);
         person.setWidth(width);
         hv=(HorizontalScrollView)findViewById(R.id.hv);
@@ -241,16 +229,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         down_tab.setOnCheckedChangeListener(this);
         up_viewpager.addOnPageChangeListener(this);
         down_viewpager.addOnPageChangeListener(this);
+
     }
 
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
 
             case R.id.car:
-                up_viewpager.setCurrentItem(UP_ONE,false);
+                up_viewpager.setCurrentItem(UP_FIVE,false);
                 break;
             case R.id.news:
-                up_viewpager.setCurrentItem(UP_TWO,false);
+                up_viewpager.setCurrentItem(UP_ONE,false);
                 break;
             case R.id.movie:
                 up_viewpager.setCurrentItem(UP_THREE,false);
@@ -259,48 +248,28 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 up_viewpager.setCurrentItem(UP_FOUR,false);
                 break;
             case R.id.lesson:
-                up_viewpager.setCurrentItem(UP_FIVE,false);
+                up_viewpager.setCurrentItem(UP_TWO,false);
                 break;
             case R.id.down_news:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_ONE,false);
                 break;
             case R.id.sound:
-                if(fManager.getBackStackEntryCount() != 0)
-
-                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_TWO,false);
                 break;
-            case R.id.market:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
+            case R.id.fun:
                 down_viewpager.setCurrentItem(DOWN_THREE,false);
                 break;
-            case R.id.pet:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
+            case R.id.market:
                 down_viewpager.setCurrentItem(DOWN_FOUR,false);
                 break;
-            case R.id.store:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
+            case R.id.carbreak:
                 down_viewpager.setCurrentItem(DOWN_FIVE,false);
                 break;
             case R.id.joke:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
                 down_viewpager.setCurrentItem(DOWN_SIX,false);
                 break;
-            case R.id.favour:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_SEVEN,false);
-                break;
             case R.id.person:
-                if(fManager.getBackStackEntryCount() != 0)
-                    fManager.popBackStack();
-                down_viewpager.setCurrentItem(DOWN_EIGHT,false);
+                down_viewpager.setCurrentItem(DOWN_SEVEN,false);
                 break;
         }
     }
@@ -341,24 +310,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     sound.setChecked(true);
                     break;
                 case DOWN_THREE:
-                    market.setChecked(true);
+                    fun.setChecked(true);
                     hv.arrowScroll(View.FOCUS_LEFT);
                     break;
                 case DOWN_FOUR:
-                    pet.setChecked(true);
+                    market.setChecked(true);
                     break;
                 case DOWN_FIVE:
-                    store.setChecked(true);
+                    carbreak.setChecked(true);
+                    hv.arrowScroll(View.FOCUS_RIGHT);
                     break;
                 case DOWN_SIX:
                     joke.setChecked(true);
-                    hv.arrowScroll(View.FOCUS_RIGHT);
                     break;
                 case DOWN_SEVEN:
-                    favour.setChecked(true);
-                    break;
-                case DOWN_EIGHT:
-                    person.setChecked(true);
+                    joke.setChecked(true);
                     break;
 
             }

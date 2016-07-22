@@ -50,10 +50,10 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case MainActivity.UP_ONE:
-                fragment = carf;
+                fragment = newsf;
                 break;
             case MainActivity.UP_TWO:
-                fragment = newsf;
+                fragment = lessonf;
                 break;
             case MainActivity.UP_THREE:
                 fragment = movief;
@@ -62,7 +62,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 fragment = sportsf;
                 break;
             case MainActivity.UP_FIVE:
-                fragment = lessonf;
+                fragment = carf;
                 break;
 
         }

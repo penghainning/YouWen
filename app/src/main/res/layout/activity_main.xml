@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:weightSum="3"
     tools:context="com.example.phn.youwenapp.MainActivity">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
@@ -42,7 +44,7 @@
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/webreplace">
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,8 +53,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5">
+        android:layout_height="300dp">
 
 
 
@@ -63,16 +64,6 @@
          android:layout_height="wrap_content">
 
          <RadioButton
-             android:id="@+id/car"
-             android:checked="true"
-             android:layout_weight="1"
-             android:layout_height="35dp"
-             android:gravity="center"
-             android:button="@null"
-             android:layout_width="0dp"
-             android:background="@drawable/button_setting"
-             android:text="汽车" />
-         <RadioButton
              android:id="@+id/news"
              android:layout_height="35dp"
              android:gravity="center"
@@ -81,24 +72,6 @@
              android:button="@null"
              android:background="@drawable/button_setting"
              android:text="新闻" />
-         <RadioButton
-             android:id="@+id/movie"
-             android:layout_height="35dp"
-             android:gravity="center"
-             android:layout_weight="1"
-             android:layout_width="0dp"
-             android:button="@null"
-             android:background="@drawable/button_setting"
-             android:text="影视" />
-         <RadioButton
-             android:id="@+id/sports"
-             android:layout_height="35dp"
-             android:gravity="center"
-             android:layout_width="0dp"
-             android:button="@null"
-             android:background="@drawable/button_setting"
-             android:layout_weight="1"
-             android:text="体育" />
          <RadioButton
              android:id="@+id/lesson"
              android:layout_weight="1"
@@ -109,6 +82,36 @@
              android:gravity="center"
              android:text="公开课"
              android:checked="false" />
+
+         <RadioButton
+             android:id="@+id/movie"
+             android:layout_height="35dp"
+             android:gravity="center"
+             android:layout_weight="1"
+             android:layout_width="0dp"
+             android:button="@null"
+             android:background="@drawable/button_setting"
+             android:text="娱乐" />
+         <RadioButton
+             android:id="@+id/sports"
+             android:layout_height="35dp"
+             android:gravity="center"
+             android:layout_width="0dp"
+             android:button="@null"
+             android:background="@drawable/button_setting"
+             android:layout_weight="1"
+             android:text="体育" />
+         <RadioButton
+             android:id="@+id/car"
+             android:checked="true"
+             android:layout_weight="1"
+             android:layout_height="35dp"
+             android:gravity="center"
+             android:button="@null"
+             android:layout_width="0dp"
+             android:background="@drawable/button_setting"
+             android:text="汽车" />
+
      </RadioGroup>
 
         <android.support.v4.view.ViewPager
@@ -118,21 +121,12 @@
         </android.support.v4.view.ViewPager>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:id="@+id/webreplace2">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/moveable">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:layout_height="600dp">
 <HorizontalScrollView
     android:layout_width="match_parent"
     android:id="@+id/hv"
@@ -148,68 +142,60 @@
             <RadioButton
                 android:id="@+id/down_news"
                 android:checked="true"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:gravity="center"
                 android:button="@null"
                 android:layout_width="80dp"
                 android:background="@drawable/button_setting"
-                android:text="新闻" />
+                android:text="头条新闻" />
             <RadioButton
                 android:id="@+id/sound"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:gravity="center"
                 android:button="@null"
                 android:layout_width="80dp"
                 android:background="@drawable/button_setting"
                 android:text="地区民生" />
             <RadioButton
+                android:id="@+id/fun"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:layout_width="80dp"
+                android:button="@null"
+                android:background="@drawable/button_setting"
+                android:text="吃喝玩乐" />
+            <RadioButton
                 android:id="@+id/market"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:gravity="center"
                 android:layout_width="80dp"
                 android:button="@null"
                 android:background="@drawable/button_setting"
                 android:text="二手市场" />
             <RadioButton
-                android:id="@+id/pet"
-                android:layout_height="30dp"
+                android:id="@+id/carbreak"
+                android:layout_height="35dp"
                 android:gravity="center"
                 android:layout_width="80dp"
                 android:button="@null"
                 android:background="@drawable/button_setting"
-                android:text="宠物" />
-            <RadioButton
-                android:id="@+id/store"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:button="@null"
-                android:background="@drawable/button_setting"
-                android:text="新店开张" />
+                android:text="违章查询" />
             <RadioButton
                 android:id="@+id/joke"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_width="80dp"
                 android:button="@null"
                 android:background="@drawable/button_setting"
                 android:gravity="center"
-                android:text="段子" />
-            <RadioButton
-                android:id="@+id/favour"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:button="@null"
-                android:background="@drawable/button_setting"
-                android:text="收藏订阅" />
+                android:text="污污段子" />
             <RadioButton
                 android:id="@+id/person"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_width="80dp"
                 android:button="@null"
                 android:background="@drawable/button_setting"
                 android:gravity="center"
-                android:text="个人信息" />
+                android:text="个人设置" />
 
         </RadioGroup>
 </HorizontalScrollView>
@@ -220,9 +206,8 @@
             android:layout_height="match_parent">
         </android.support.v4.view.ViewPager>
             </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
     </LinearLayout>
     </FrameLayout>
 </LinearLayout>
+</ScrollView>
 </LinearLayout>

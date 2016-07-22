@@ -1,23 +1,16 @@
 package com.example.phn.youwenapp;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.text.Html;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,48 +20,81 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-/**
- * Created by PHN on 2016/7/4.
- */
-public class movieFragment extends Fragment {
+public class MovieDetail extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+
+    private RadioGroup movie_tap;
+    private RadioButton type_movie;
+    private RadioButton type_tv;
+    private RadioButton type_vip;
+    private RadioButton type_china;
+    private RadioButton type_usa;
+    private Document doc;
+    private Elements es;
     private ListView movielist;
     private movieAdapter mmovieAdapter;
     private List<Lesson_data> mData = null;
-    private Context mContext;
-    private Document doc;
-    private Elements es;
-    private MainActivity activity;
-    private Handler handler;
 
-    public movieFragment() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.movie_detail);
+        bindview();
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.movie_fragment, container, false);
-        mContext=getActivity();
-        activity=(MainActivity)getActivity();
-        new Thread(new load(0)).start();
-        handler=activity.handler;
-        movielist=(ListView)view.findViewById(R.id.movielist);
+
+    public void bindview()
+    {
+        movie_tap=(RadioGroup)findViewById(R.id.movie_tab);
+        type_china=(RadioButton)findViewById(R.id.type_china);
+        type_movie=(RadioButton)findViewById(R.id.type_movie);
+        type_tv=(RadioButton)findViewById(R.id.type_tv);
+        type_vip=(RadioButton)findViewById(R.id.type_vip);
+        type_usa=(RadioButton)findViewById(R.id.type_usa);
+        movie_tap.setOnCheckedChangeListener(this);
+        movielist=(ListView)findViewById(R.id.movielist);
         movielist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Lesson_data d=(Lesson_data)movielist.getAdapter().getItem(position);
                 Log.i("url",d.getLessonurl());
                 MainActivity.mediaurl=d.getLessonurl();
-                handler.sendEmptyMessage(100);
 
             }
         });
 
-        return view;
     }
+
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+            case R.id.type_tv:
+                new Thread(new load(0)).start();
+                type_tv.setChecked(true);
+                break;
+            case R.id.type_movie:
+                new Thread(new load(1)).start();
+                type_movie.setChecked(true);
+                break;
+            case R.id.type_vip:
+                new Thread(new load(2)).start();
+                type_vip.setChecked(true);
+                break;
+            case R.id.type_china:
+                new Thread(new load(3)).start();
+                type_china.setChecked(true);
+                break;
+            case R.id.type_usa:
+                new Thread(new load(4)).start();
+                type_usa.setChecked(true);
+                break;
+        }
+    }
+
+
+
     class load extends Thread {//接受服务器信息的线程
         private int n;
         load(int n){
@@ -107,7 +133,7 @@ public class movieFragment extends Fragment {
                 e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
-                handler.sendEmptyMessage(88);
+                myHandler.sendEmptyMessage(88);
             }
 
             Message msg = new Message();
@@ -164,17 +190,19 @@ public class movieFragment extends Fragment {
 
                             }
                         }
-                        mmovieAdapter= new movieAdapter((LinkedList<Lesson_data>) mData, mContext);
+                        mmovieAdapter= new movieAdapter((LinkedList<Lesson_data>) mData, MovieDetail.this);
                         movielist.setAdapter(mmovieAdapter);
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
+                case 88:
+                    Toast.makeText(MovieDetail.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
+                    break;
             }
             super.handleMessage(msg);
         }
     };
-
 
 }
