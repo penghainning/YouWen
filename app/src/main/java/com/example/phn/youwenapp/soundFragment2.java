@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -42,9 +43,9 @@ public class soundFragment2 extends Fragment {
     RadioButton city1;
     RadioButton city2;
     LinearLayout bottom;
-    ProgressDialog progress;
     List<Map<String, String>> list;
     SimpleAdapter adapter;
+    private boolean success=false;
     public soundFragment2() {
     }
 
@@ -64,13 +65,15 @@ public class soundFragment2 extends Fragment {
                 switch (checkedId) {
 
                     case R.id.city1:
-                        progress= ProgressDialog.show(getActivity(),"", "正在加载数据,请稍候...");
                         new Thread(new load(1)).start();
+                        success=false;
+                        new Thread(new timeError()).start();
                         city1.setChecked(true);
                         break;
                     case R.id.city2:
-                        progress= ProgressDialog.show(getActivity(),"", "正在加载数据,请稍候...");
                         new Thread(new load(2)).start();
+                        success=false;
+                        new Thread(new timeError()).start();
                         city2.setChecked(true);
                         break;
             }
@@ -90,7 +93,7 @@ public class soundFragment2 extends Fragment {
                 Map<String, String> m=(Map<String,String>)soundlist.getAdapter().getItem(position);
                 Log.i("url",m.get("href"));
                 MainActivity.mediaurl=m.get("href");
-                handler.sendEmptyMessage(100);
+                handler.sendEmptyMessage(700);
             }
         });
         return view;
@@ -115,6 +118,7 @@ public class soundFragment2 extends Fragment {
 
 
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(1);
                 Log.i("Malfrom","超时啦");
                 e1.printStackTrace();
             } catch (IOException e1) {
@@ -129,6 +133,7 @@ public class soundFragment2 extends Fragment {
             bundle.clear();
             bundle.putInt("num",n);
             msg.setData(bundle);
+            success=true;
             myHandler.sendMessage(msg);
 
         }
@@ -174,20 +179,17 @@ public class soundFragment2 extends Fragment {
                         }
 
                         adapter.notifyDataSetChanged();
-                        if(progress!=null)
-                        progress.dismiss();
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
-               /* case 1:
-                    Bundle bundle=msg.getData();
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("title",bundle.getString("title"));
-                    map.put("content",bundle.getString("content"));
-                    list.add(map);
-                    adapter.notifyDataSetChanged();*/
+                case 1:
+                    Toast.makeText(getActivity(),"网络状态不好，请重试！",Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+
             }
             super.handleMessage(msg);
         }
@@ -197,12 +199,25 @@ public class soundFragment2 extends Fragment {
        list.add(m);
         adapter.notifyDataSetChanged();
 
-       /* Message msg=new Message();
-        Bundle bundle=new Bundle();
-        bundle.putString("title",m.get("title"));
-        bundle.putString("content",m.get("content"));
-        msg.setData(bundle);
-        msg.what=1;
-        myHandler.sendMessage(msg);*/
+    }
+
+    public class timeError extends Thread
+    {
+        @Override
+        public void run() {
+            for(int i=0;i<5;i++)
+            {
+                try {
+                    Thread.sleep(200);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                if(success)
+                    break;
+            }
+            if(!success)
+                myHandler.sendEmptyMessage(1);
+        }
     }
 }

@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 /**
  * Created by PHN on 2016/7/4.
  */
-public class favourFragment extends Fragment {
+public class carbreakFragment extends Fragment {
 
 
-    public favourFragment() {
+    public carbreakFragment() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.favour_fragment, container, false);
+        View view = inflater.inflate(R.layout.carbreak_fragment, container, false);
         return view;
     }
 }

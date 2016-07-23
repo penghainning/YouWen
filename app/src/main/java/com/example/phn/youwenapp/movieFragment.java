@@ -62,7 +62,10 @@ public class movieFragment extends Fragment {
                 Lesson_data d=(Lesson_data)movielist.getAdapter().getItem(position);
                 Log.i("url",d.getLessonurl());
                 MainActivity.mediaurl=d.getLessonurl();
-                handler.sendEmptyMessage(100);
+                Message message=new Message();
+                message.what=300;
+                message.arg1=0;
+                handler.sendMessage(message);
 
             }
         });
@@ -138,11 +141,6 @@ public class movieFragment extends Fragment {
                                 String title = e.getElementsByTag("a").attr("title").trim();
                                 String lessonurl = e.getElementsByTag("a").attr("href");
                                 String visit = e.getElementsByTag("span").text().trim();
-                                Log.i("0", String.valueOf(n));
-                                Log.i("1", number);
-                                Log.i("2", title);
-                                Log.i("3", lessonurl);
-                                Log.i("4", visit);
                                 mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
 
                             }
@@ -155,11 +153,6 @@ public class movieFragment extends Fragment {
                                 String title =e.getElementsByTag("a").attr("title").trim();
                                 String lessonurl = e.getElementsByTag("a").attr("href");
                                 String visit = e.getElementsByClass("score").text().trim();
-                                Log.i("0", String.valueOf(n));
-                                Log.i("1", number);
-                                Log.i("2", title);
-                                Log.i("3", lessonurl);
-                                Log.i("4", visit);
                                 mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
 
                             }

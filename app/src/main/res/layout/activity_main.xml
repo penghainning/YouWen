@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="3"
     tools:context="com.example.phn.youwenapp.MainActivity">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,32 +14,37 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:weightSum="5"
         android:focusable="true"
+        android:background="#1C86EE"
+        android:gravity="center"
         android:focusableInTouchMode="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@mipmap/previous"
+            android:id="@+id/back" />
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="35dp"
             android:layout_weight="5"
             android:singleLine="true"
             android:imeOptions="actionSearch"
             android:id="@+id/searchtext"
             android:background="@drawable/et3" />
-        <View
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:background="#ffffff"
-            android:layout_width="0.5dip"
-            android:layout_height="match_parent"/>
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="35dp"
             android:background="@drawable/button_press"
             android:id="@+id/search" />
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +56,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        android:id="@+id/hide1">
 
 
 
@@ -65,6 +69,7 @@
 
          <RadioButton
              android:id="@+id/news"
+             android:checked="true"
              android:layout_height="35dp"
              android:gravity="center"
              android:layout_width="0dp"
@@ -103,7 +108,6 @@
              android:text="体育" />
          <RadioButton
              android:id="@+id/car"
-             android:checked="true"
              android:layout_weight="1"
              android:layout_height="35dp"
              android:gravity="center"
@@ -126,7 +130,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="600dp">
+                android:layout_height="600dp"
+                android:id="@+id/hide2">
 <HorizontalScrollView
     android:layout_width="match_parent"
     android:id="@+id/hv"
@@ -208,6 +213,6 @@
             </LinearLayout>
     </LinearLayout>
     </FrameLayout>
+    </ScrollView>
 </LinearLayout>
-</ScrollView>
 </LinearLayout>

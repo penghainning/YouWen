@@ -4,17 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.DocumentsContract;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,9 +28,8 @@ import java.util.List;
 /**
  * Created by PHN on 2016/7/4.
  */
-public class lessonFragment extends Fragment {
-
-    private ListView mlesson;
+public class detail_lesson extends Fragment implements RadioGroup.OnCheckedChangeListener{
+    private ListView lessonlist;
     private lessonAdapter mlessonAdapter;
     private List<Lesson_data> mData = null;
     private Context mContext;
@@ -40,31 +37,74 @@ public class lessonFragment extends Fragment {
     private Elements es;
     private MainActivity activity;
     private Handler handler;
-    public lessonFragment() {
+    private RadioGroup lesson_tab;
+    private RadioButton type_all;
+    private RadioButton type_month;
+    private RadioButton type_week;
+    private RadioButton type_recent;
+
+    public detail_lesson() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.lesson_fragment, container, false);
-        new Thread(new load(0)).start();
+        View view = inflater.inflate(R.layout.lesson_detail, container, false);
+        bindview(view);
+        return view;
+    }
+
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+            case R.id.type_all:
+                new Thread(new load(0)).start();
+                type_all.setChecked(true);
+                break;
+            case R.id.type_week:
+                new Thread(new load(1)).start();
+                type_week.setChecked(true);
+                break;
+            case R.id.type_month:
+                new Thread(new load(2)).start();
+                type_month.setChecked(true);
+                break;
+            case R.id.type_recent:
+                new Thread(new load(3)).start();
+                type_recent.setChecked(true);
+                break;
+        }
+    }
+
+
+    public void bindview(View view)
+    {
+        lesson_tab=(RadioGroup)view.findViewById(R.id.lesson_tab);
+        type_all=(RadioButton)view.findViewById(R.id.type_all);
+        type_week=(RadioButton)view.findViewById(R.id.type_week);
+        type_month=(RadioButton)view.findViewById(R.id.type_month);
+        type_recent=(RadioButton)view.findViewById(R.id.type_recent);
+        lesson_tab.setOnCheckedChangeListener(this);
         mContext=getActivity();
         activity=(MainActivity)getActivity();
         handler=activity.handler;
-        mlesson=(ListView)view.findViewById(R.id.mlesson);
-        mlesson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        type_all.setChecked(true);
+        new Thread(new load(0)).start();
+        lessonlist=(ListView)view.findViewById(R.id.lessonlist);
+        lessonlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Lesson_data d=(Lesson_data)mlesson.getAdapter().getItem(position);
+                Lesson_data d=(Lesson_data)lessonlist.getAdapter().getItem(position);
                 Log.i("url",d.getLessonurl());
                 MainActivity.mediaurl=d.getLessonurl();
                 Message message=new Message();
                 message.what=200;
-                message.arg1=0;
+                message.arg1=1;
                 handler.sendMessage(message);
+
+
             }
         });
-        return view;
-    }
 
+    }
     class load extends Thread {//接受服务器信息的线程
         private int n;
         load(int n){
@@ -112,7 +152,7 @@ public class lessonFragment extends Fragment {
                 case 0:
                     try {
                         Bundle bundle = msg.getData();
-                         int n=bundle.getInt("num");
+                        int n=bundle.getInt("num");
                         mData=new LinkedList<>();
                         int i=0;
                         for (Element e : es)
@@ -121,14 +161,19 @@ public class lessonFragment extends Fragment {
                             String title=e.getElementsByTag("a").text().trim();
                             String lessonurl=e.getElementsByTag("a").attr("href");
                             String visit=e.getElementsByTag("span").text().trim();
-                           if(n==3)
-                            mData.add(new Lesson_data(lessonurl,String.valueOf(++i),title,visit,i));//添加到listview中
+                            Log.i("0",String.valueOf(n));
+                            Log.i("1",number);
+                            Log.i("2",title);
+                            Log.i("3",lessonurl);
+                            Log.i("4",visit);
+                            if(n==3)
+                                mData.add(new Lesson_data(lessonurl,String.valueOf(++i),title,visit,i));//添加到listview中
                             else
-                               mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
+                                mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
                         }
 
                         mlessonAdapter = new lessonAdapter((LinkedList<Lesson_data>) mData, mContext);
-                        mlesson.setAdapter(mlessonAdapter);
+                        lessonlist.setAdapter(mlessonAdapter);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -138,6 +183,8 @@ public class lessonFragment extends Fragment {
             super.handleMessage(msg);
         }
     };
+
+
 
 
 }

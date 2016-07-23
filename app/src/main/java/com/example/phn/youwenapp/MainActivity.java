@@ -2,6 +2,7 @@ package com.example.phn.youwenapp;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     public static String mediaurl;
     private EditText searchText;
     private Button search;
+    private Button back;
     private RadioGroup up_tab;
     private RadioGroup down_tab;
     private RadioButton car;
@@ -53,11 +55,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private MyFragmentPagerAdapter mAdapter;
     private MyFragmentPagerAdapter2 mAdapter2;
     private HorizontalScrollView hv;
-    private FrameLayout fl;
+    private LinearLayout hide1;
+    private LinearLayout hide2;
     private FragmentManager fManager = null;
     private FragmentTransaction ft=null;
     private searchFragment searchf=null;
     private int width;
+    private int backtype;
+    private boolean ismain=true;
     public static int type=0;
     public static final int UP_ONE = 0;
     public static final int UP_TWO = 1;
@@ -76,10 +81,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fManager=getSupportFragmentManager();
-        fl=(FrameLayout)findViewById(R.id.webreplace);
-        mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        mAdapter2 = new MyFragmentPagerAdapter2(getSupportFragmentManager());
         bindViews();
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -106,38 +107,95 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             super.handleMessage(msg);
             if(msg!=null){
                 Bundle bundle=msg.getData();
+                mediaFragment mediaf=null;
                 switch (msg.what) {
-                    case 100://查看新闻、体育、公开课、影视、
+                    case 100://查看新闻
                         Log.i("Main_lessonurl",mediaurl);
-                        mediaFragment mediaf=new mediaFragment(mediaurl,1);
+                         mediaf=new mediaFragment(mediaurl,1);
+                        if(msg.arg1==1)
+                            backtype=-1;
+                        else
+                        backtype=1;
+                        Myrelace(mediaf);
+                        break;
+                    case 200://查看公开课
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaf=new mediaFragment(mediaurl,1);
+                        if(msg.arg1==1)
+                            backtype=-1;
+                        else
+                        backtype=2;
+                        Myrelace(mediaf);
+                        break;
+                    case 300://查看娱乐
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaf=new mediaFragment(mediaurl,1);
+                        if(msg.arg1==1)
+                            backtype=-1;
+                        else
+                        backtype=3;
+                        Myrelace(mediaf);
+                        break;
+                    case 400://查看体育
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaf=new mediaFragment(mediaurl,1);
+                        if(msg.arg1==1)
+                            backtype=-1;
+                        else
+                            backtype=4;
+                        Myrelace(mediaf);
+                        break;
+                    case 500://查看汽车
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaf=new mediaFragment(mediaurl,1);
+                        if(msg.arg1==1)
+                            backtype=-1;
+                        else
+                        backtype=5;
+                        Myrelace(mediaf);
                         break;
                     case 101://地区民声选择了地区
                         type=1;
                         break;
                     case 102://收起按钮及返回
+                        searchText.setText("");
                         if(up_viewpager.getVisibility()==View.GONE)
                             up_viewpager.setVisibility(View.VISIBLE);
                         if(down_viewpager.getVisibility()==View.GONE)
                             down_viewpager.setVisibility(View.VISIBLE);
-                        searchText.setText("");
+                        if(up_tab.getVisibility()==View.GONE)
+                            up_tab.setVisibility(View.VISIBLE);
+                        if(down_tab.getVisibility()==View.GONE)
+                            down_tab.setVisibility(View.VISIBLE);
                         fManager.popBackStack();
                         break;
                     case 103://发布信息
                         publishFragment publishf=new publishFragment();
                         if(fManager.getBackStackEntryCount() != 0)
                             fManager.popBackStack();
-                        ft = fManager.beginTransaction();
-                        ft.replace(R.id.webreplace,publishf);
-                        up_viewpager.setVisibility(View.GONE);
-                        down_viewpager.setVisibility(View.GONE);
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        Myrelace(publishf);
                         break;
-                    case 104://点击文字新闻
+                    case 600://点击文字新闻
                         Log.i("Main_lessonurl",mediaurl);
-                        mediaFragment downmedia=new mediaFragment(mediaurl,2);
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        mediaf=new mediaFragment(mediaurl,2);
+                            backtype=6;
+                        Myrelace(mediaf);
+                        break;
+                    case 700://点击地区民生
+                        Log.i("Main_lessonurl",mediaurl);
+                        mediaf=new mediaFragment(mediaurl,1);
+                        backtype=7;
+                        Myrelace(mediaf);
+                        break;
+                    case 800://点击吃喝玩乐
+                        detail_fun df=new detail_fun();
+                        backtype=8;
+                        Myrelace(df);
+                        break;
+                    case 900://点击二手市场
+                        detail_market mf=new detail_market();
+                        backtype=9;
+                        Myrelace(mf);
                         break;
                     case 105://发布地区民生
                         soundFragment2 s2=(soundFragment2) down_viewpager.getAdapter().instantiateItem(down_viewpager,1);
@@ -146,37 +204,29 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         map.put("content",bundle.getString("content"));
                         s2.loaddata(map);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        backtype=-1;
                         onBackPressed();
                         break;
                     case 106://发布二手市场
-                        marketFragment market=(marketFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,2);
+                        marketFragment market=(marketFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,3);
                         Map<String, String> map2= new HashMap<String, String>();
                         map2.put("title",bundle.getString("title"));
                         map2.put("content",bundle.getString("content"));
                         market.loaddata(map2);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        backtype=-1;
                         onBackPressed();
                         break;
-                    case 107://发布宠物
-                        Map<String, String> map3= new HashMap<String, String>();
+                    case 107://发布吃喝玩乐
+                        funFragment f2=(funFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,2);
+                        Map<String, String> map3 = new HashMap<String, String>();
                         map3.put("title",bundle.getString("title"));
                         map3.put("content",bundle.getString("content"));
-                        petFragment pet=(petFragment)down_viewpager.getAdapter().instantiateItem(down_viewpager,3);
-                        pet.loaddata(map3);
+                        f2.loaddata(map3);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                        backtype=-1;
                         onBackPressed();
                         break;
-                    case 108://发布新店开张
-                        Map<String, String> map4= new HashMap<String, String>();
-                        map4.put("title",bundle.getString("title"));
-                        map4.put("content",bundle.getString("content"));
-                        storeFragment store=(storeFragment)down_viewpager.getAdapter().instantiateItem(down_viewpager,4);
-                        store.loaddata(map4);
-                        Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
-                        onBackPressed();
-                        break;
-
-
                     case 88://网络异常
                         Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
                     default:
@@ -193,8 +243,19 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         width = outMetrics.widthPixels/5;
+        fManager=getSupportFragmentManager();
+        hide1=(LinearLayout)findViewById(R.id.hide1);
+        hide2=(LinearLayout)findViewById(R.id.hide2);
+        mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        mAdapter2 = new MyFragmentPagerAdapter2(getSupportFragmentManager());
         searchText=(EditText)findViewById(R.id.searchtext);
         search=(Button)findViewById(R.id.search);
+        back=(Button)findViewById(R.id.back) ;
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handler.sendEmptyMessage(102);
+            }
+        });
         up_tab=(RadioGroup)findViewById(R.id.up_tab);
         down_tab=(RadioGroup)findViewById(R.id.down_tab);
         car=(RadioButton)findViewById(R.id.car);
@@ -258,12 +319,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
             case R.id.fun:
                 down_viewpager.setCurrentItem(DOWN_THREE,false);
+                hv.arrowScroll(View.FOCUS_LEFT);
                 break;
             case R.id.market:
                 down_viewpager.setCurrentItem(DOWN_FOUR,false);
                 break;
             case R.id.carbreak:
                 down_viewpager.setCurrentItem(DOWN_FIVE,false);
+                hv.arrowScroll(View.FOCUS_RIGHT);
                 break;
             case R.id.joke:
                 down_viewpager.setCurrentItem(DOWN_SIX,false);
@@ -286,10 +349,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         if (state == 2) {
             switch (up_viewpager.getCurrentItem()) {
                 case UP_ONE:
-                    car.setChecked(true);
+                    news.setChecked(true);
                     break;
                 case UP_TWO:
-                    news.setChecked(true);
+                    lesson.setChecked(true);
                     break;
                 case UP_THREE:
                     movie.setChecked(true);
@@ -298,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     sports.setChecked(true);
                     break;
                 case UP_FIVE:
-                    lesson.setChecked(true);
+                    car.setChecked(true);
                     break;
             }
 
@@ -311,14 +374,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     break;
                 case DOWN_THREE:
                     fun.setChecked(true);
-                    hv.arrowScroll(View.FOCUS_LEFT);
                     break;
                 case DOWN_FOUR:
                     market.setChecked(true);
                     break;
                 case DOWN_FIVE:
                     carbreak.setChecked(true);
-                    hv.arrowScroll(View.FOCUS_RIGHT);
                     break;
                 case DOWN_SIX:
                     joke.setChecked(true);
@@ -331,11 +392,108 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
     }
     public void onBackPressed() {
-        if(up_viewpager.getVisibility()==View.GONE)
-           up_viewpager.setVisibility(View.VISIBLE);
-        if(down_viewpager.getVisibility()==View.GONE)
-            down_viewpager.setVisibility(View.VISIBLE);
-        super.onBackPressed();
+        Log.i("backtype: ",String.valueOf(fManager.getBackStackEntryCount()));
+        //返回类型为新闻
+        if(backtype==1)
+        {
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回新闻列表");
+            detail_news ns=new detail_news();
+            Myrelace(ns);
+        }
+        //返回类型为公开课
+        else if(backtype==2)
+        {
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回公开课列表");
+            detail_lesson ls=new detail_lesson();
+            Myrelace(ls);
+        }
+        //返回类型为娱乐
+        else if(backtype==3)
+        {
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回娱乐列表");
+            detail_movie dm=new detail_movie();
+            Myrelace(dm);
+        }
+        //返回类型为体育
+        else if(backtype==4)
+        {
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回体育列表");
+            detail_sports sp=new detail_sports();
+            Myrelace(sp);
+        }
+        //返回类型为汽车
+        else if(backtype==5)
+        {
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回汽车列表");
+            carFragment cf=new carFragment();
+            Myrelace(cf);
+        }
+        //返回类型为文字新闻
+        else if(backtype==6)
+        {
+            if(ismain)
+            {
+                fManager.popBackStack();
+                Log.i("onBackPressed: ","返回文字新闻列表");
+                downnewsFragment df=new downnewsFragment();
+                Myrelace(df);
+                ismain=false;
+            }
+            else
+            {
+                fManager.popBackStack();
+            }
+
+        }
+        //返回类型为地区民生
+        else if(backtype==7)
+        {
+            if(ismain)
+            {
+                fManager.popBackStack();
+                Log.i("onBackPressed: ","返回地区民生列表");
+                soundFragment2 sf2=new soundFragment2();
+                Myrelace(sf2);
+                ismain=false;
+            }
+            else
+            {
+                fManager.popBackStack();
+            }
+
+        }
+
+        else if(backtype==-1)
+        {
+            fManager.popBackStack();
+        }
+
+        else
+        {
+            Log.i("onBackPressed: ","返回主页面");
+            ismain=true;
+            if(fManager.getBackStackEntryCount()>0)
+                  fManager.popBackStack();
+            if(up_viewpager.getVisibility()==View.GONE)
+                up_viewpager.setVisibility(View.VISIBLE);
+            if(down_viewpager.getVisibility()==View.GONE)
+                down_viewpager.setVisibility(View.VISIBLE);
+            if(up_tab.getVisibility()==View.GONE)
+                up_tab.setVisibility(View.VISIBLE);
+            if(down_tab.getVisibility()==View.GONE)
+                down_tab.setVisibility(View.VISIBLE);
+            if(fManager.getBackStackEntryCount()==0)
+                super.onBackPressed();
+        }
+        backtype=0;
+
+
+
     }
     public void mySearch()
     {
@@ -360,5 +518,16 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             ft.commit();
 
         }
+    }
+    public void Myrelace(Fragment f)
+    {
+        up_viewpager.setVisibility(View.GONE);
+        down_viewpager.setVisibility(View.GONE);
+        up_tab.setVisibility(View.GONE);
+        down_tab.setVisibility(View.GONE);
+        ft = fManager.beginTransaction();
+        ft.replace(R.id.webreplace,f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

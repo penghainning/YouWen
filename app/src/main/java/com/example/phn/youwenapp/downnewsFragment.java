@@ -49,7 +49,7 @@ public class downnewsFragment extends Fragment {
                 Lesson_data d=(Lesson_data)downnewslist.getAdapter().getItem(position);
                 Log.i("url",d.getLessonurl());
                 MainActivity.mediaurl=d.getLessonurl();
-                handler.sendEmptyMessage(104);
+                handler.sendEmptyMessage(600);
             }
         });
         return view;

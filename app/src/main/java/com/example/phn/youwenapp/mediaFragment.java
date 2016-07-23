@@ -36,6 +36,7 @@ public class mediaFragment extends Fragment {
     Handler handler;
     public mediaFragment(String mediaurl,int type){
         this.mediaurl=mediaurl;this.type=type;
+
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.media_fragment, container, false);

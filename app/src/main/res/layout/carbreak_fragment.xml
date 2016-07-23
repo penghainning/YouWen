@@ -10,10 +10,8 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/petlist">
+            android:id="@+id/favourlist">
+
         </ListView>
-
-        <include layout="@layout/bottom_layout"/>
-
     </FrameLayout>
 </LinearLayout>

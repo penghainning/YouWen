@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RadioGroup
+        android:id="@+id/news_tab"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/type_one"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:text="平民新闻" />
+        <RadioButton
+            android:id="@+id/type_two"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:gravity="center"
+            android:text="凤凰新闻"
+            android:checked="false" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newslist"
+            >
+        </ListView>
+    </LinearLayout>
+</LinearLayout>

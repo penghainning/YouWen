@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RadioGroup
+        android:id="@+id/market_tab"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/type_pet"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:text="宠物" />
+        <RadioButton
+            android:id="@+id/type_marketcar"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:gravity="center"
+            android:text="汽车"
+            android:checked="false" />
+
+        <RadioButton
+            android:id="@+id/type_home"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:text="家具" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/marketlist"
+            >
+        </ListView>
+    </LinearLayout>
+</LinearLayout>

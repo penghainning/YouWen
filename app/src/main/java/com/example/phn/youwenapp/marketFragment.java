@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -48,6 +49,12 @@ public class marketFragment  extends Fragment {
             @Override
             public void onClick(View v) {
                 handler.sendEmptyMessage(103);
+            }
+        });
+        marketlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                handler.sendEmptyMessage(900);
             }
         });
         return view;

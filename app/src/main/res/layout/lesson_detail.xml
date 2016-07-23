@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RadioGroup
+        android:id="@+id/lesson_tab"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/type_all"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:text="总排行榜" />
+        <RadioButton
+            android:id="@+id/type_week"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:gravity="center"
+            android:text="周排行榜"
+            android:checked="false" />
+
+        <RadioButton
+            android:id="@+id/type_month"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:text="月排行榜" />
+        <RadioButton
+            android:id="@+id/type_recent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:button="@null"
+            android:background="@drawable/button_setting"
+            android:layout_weight="1"
+            android:text="最近课程" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lessonlist"
+            >
+        </ListView>
+    </LinearLayout>
+</LinearLayout>

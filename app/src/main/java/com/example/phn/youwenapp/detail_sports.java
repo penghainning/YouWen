@@ -1,5 +1,6 @@
 package com.example.phn.youwenapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,25 +25,77 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by PHN on 2016/7/4.
  */
-public class sportsFragment  extends Fragment {
-    Document doc;
-    Elements es;
-    ListView sportslist;
-    Handler handler;
+public class detail_sports extends Fragment implements RadioGroup.OnCheckedChangeListener{
+    private ListView sportslist;
+    private Context mContext;
+    private Document doc;
+    private Elements es;
+    private MainActivity activity;
+    private Handler handler;
+    private RadioGroup sports_tab;
+    private RadioButton type_football;
+    private RadioButton type_show;
+    private RadioButton type_basketball;
+    private RadioButton type_table;
+    private RadioButton type_other;
 
-    public sportsFragment() {
+    public detail_sports() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sports_fragment, container, false);
+        View view = inflater.inflate(R.layout.sports_detail, container, false);
+        bindview(view);
+        return view;
+    }
+
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+            case R.id.type_show:
+                new Thread(new load(0)).start();
+                type_show.setChecked(true);
+                break;
+            case R.id.type_football:
+                new Thread(new load(1)).start();
+                type_football.setChecked(true);
+                break;
+            case R.id.type_basketball:
+                new Thread(new load(2)).start();
+                type_basketball.setChecked(true);
+                break;
+            case R.id.type_table:
+                new Thread(new load(3)).start();
+                type_table.setChecked(true);
+                break;
+            case R.id.type_other:
+                new Thread(new load(4)).start();
+                type_other.setChecked(true);
+                break;
+        }
+    }
+
+
+    public void bindview(View view)
+    {
+        sports_tab=(RadioGroup)view.findViewById(R.id.sports_tab);
+        type_table=(RadioButton)view.findViewById(R.id.type_table);
+        type_football=(RadioButton)view.findViewById(R.id.type_football);
+        type_show=(RadioButton)view.findViewById(R.id.type_show);
+        type_show.setChecked(true);
+        type_basketball=(RadioButton)view.findViewById(R.id.type_basketball);
+        type_other=(RadioButton)view.findViewById(R.id.type_other);
+        sports_tab.setOnCheckedChangeListener(this);
+        sportslist=(ListView)view.findViewById(R.id.sportslist);
+        mContext=getActivity();
+        activity=(MainActivity)getActivity();
         new Thread(new load(0)).start();
-        MainActivity activity=(MainActivity)getActivity();
         handler=activity.handler;
         sportslist=(ListView)view.findViewById(R.id.sportslist);
         sportslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,13 +106,12 @@ public class sportsFragment  extends Fragment {
                 MainActivity.mediaurl=m.get("href");
                 Message message=new Message();
                 message.what=400;
-                message.arg1=0;
+                message.arg1=1;
                 handler.sendMessage(message);
             }
         });
-        return view;
-    }
 
+    }
     class load extends Thread {//接受服务器信息的线程
         private int n;
         load(int n){
@@ -132,4 +184,7 @@ public class sportsFragment  extends Fragment {
             super.handleMessage(msg);
         }
     };
+
+
+
 }

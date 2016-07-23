@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.ViewGroup;
 
 /**
@@ -19,6 +18,8 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
     private Fragment soundf2=null;
     private  marketFragment marketf=null;
     private jokeFragment jokef=null;
+    private funFragment funf=null;
+    private carbreakFragment carbreakf=null;
     private personFragment personf=null;
 
 
@@ -31,6 +32,8 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
         soundf=new soundFragment();
         soundf2=new soundFragment2();
         personf=new personFragment();
+        funf=new funFragment();
+        carbreakf=new carbreakFragment();
 
 
     }
@@ -78,13 +81,13 @@ public class MyFragmentPagerAdapter2 extends FragmentPagerAdapter {
                         fragment = soundf;
                     break;
                 case MainActivity.DOWN_THREE:
-                    fragment = new petFragment();
+                    fragment = funf;
                     break;
                 case MainActivity.DOWN_FOUR:
                    fragment = marketf;
                 break;
             case MainActivity.DOWN_FIVE:
-               fragment = new favourFragment();
+               fragment =carbreakf;
                 break;
             case MainActivity.DOWN_SIX:
                 fragment = jokef;

@@ -9,8 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
@@ -24,26 +25,33 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by PHN on 2016/7/4.
  */
-public class newsFragment extends Fragment {
-    private Spinner news_type;
+public class detail_news extends Fragment implements RadioGroup.OnCheckedChangeListener{
     Document doc;
     Elements es;
     ListView newslist;
     Handler handler;
+    private RadioGroup news_tap;
+    private RadioButton type_one;
+    private RadioButton type_two;
     List<Map<String, String>> list2;
-    public newsFragment() {
+
+    public detail_news() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_fragment, container, false);
+        View view = inflater.inflate(R.layout.news_detail, container, false);
         MainActivity activity=(MainActivity) getActivity();
+        news_tap=(RadioGroup)view.findViewById(R.id.news_tab);
+        type_one=(RadioButton)view.findViewById(R.id.type_one);
+        type_two=(RadioButton)view.findViewById(R.id.type_two);
+        news_tap.setOnCheckedChangeListener(this);
+        type_one.setChecked(true);
         handler=activity.handler;
         newslist = (ListView) view.findViewById(R.id.newslist);
         newslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,7 +60,11 @@ public class newsFragment extends Fragment {
                 Map<String, String> m=(Map<String,String>)newslist.getAdapter().getItem(position);
                 Log.i("url",m.get("href"));
                 MainActivity.mediaurl=m.get("href");
-                handler.sendEmptyMessage(100);
+                Message message=new Message();
+                message.what=100;
+                message.arg1=1;
+                handler.sendMessage(message);
+
             }
         });
         new Thread(new load(0)).start();
@@ -128,6 +140,20 @@ public class newsFragment extends Fragment {
             super.handleMessage(msg);
         }
     };
+
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+            case R.id.type_one:
+                new Thread(new load(0)).start();
+                type_one.setChecked(true);
+                break;
+            case R.id.type_two:
+                new Thread(new load(1)).start();
+                type_two.setChecked(true);
+                break;
+        }
+    }
 
 
 
