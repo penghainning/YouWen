@@ -70,12 +70,21 @@
         <item>镇</item>
     </string-array>
 
-    <string-array name="module">
+    <string-array name="module1">
         <item>地区民生</item>
-        <item>二手市场</item>
+    </string-array>
+
+    <string-array name="module2">
         <item>宠物</item>
+        <item>家具</item>
+        <item>汽车</item>
+    </string-array>
+    <string-array name="module3">
+        <item>打折</item>
+        <item>推荐</item>
         <item>新店开张</item>
     </string-array>
+
 
     <string-array name="shape">
         <item>选择车型</item>

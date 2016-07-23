@@ -38,7 +38,5 @@
         android:textColor="#7fff0000"
         android:text="汕尾" />
 </RadioGroup>
- <include layout="@layout/bottom_layout"/>
-
  </FrameLayout>
 </LinearLayout>

@@ -12,7 +12,6 @@
             android:id="@+id/marketlist">
         </ListView>
 
-        <include layout="@layout/bottom_layout"/>
 
     </FrameLayout>
 </LinearLayout>

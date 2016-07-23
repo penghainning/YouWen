@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class funFragment extends Fragment {
 
-    LinearLayout bottom;
     ListView funlist;
     Handler handler;
     List<Map<String, String>> list;
@@ -32,7 +31,6 @@ public class funFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fun_fragment, container, false);
-        bottom=(LinearLayout)view.findViewById(R.id.bottom);
         funlist=(ListView)view.findViewById(R.id.funlist);
         list = new ArrayList<Map<String, String>>();
        for(int i=0;i<5;i++)
@@ -47,12 +45,6 @@ public class funFragment extends Fragment {
         funlist.setAdapter(petAdapter);
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.sendEmptyMessage(103);
-            }
-        });
         funlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

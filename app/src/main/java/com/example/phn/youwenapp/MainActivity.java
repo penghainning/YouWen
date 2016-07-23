@@ -14,10 +14,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -146,13 +144,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         Myrelace(mediaf);
                         break;
                     case 500://查看汽车
-                        Log.i("Main_lessonurl",mediaurl);
-                        mediaf=new mediaFragment(mediaurl,1);
-                        if(msg.arg1==1)
-                            backtype=-1;
-                        else
-                        backtype=5;
-                        Myrelace(mediaf);
+                        detail_car dc=new detail_car();
+                        backtype=100;
+                        Myrelace(dc);
                         break;
                     case 101://地区民声选择了地区
                         type=1;
@@ -171,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         break;
                     case 103://发布信息
                         publishFragment publishf=new publishFragment();
+                        publishf.setType(msg.arg1);
                         if(fManager.getBackStackEntryCount() != 0)
                             fManager.popBackStack();
                         Myrelace(publishf);
@@ -180,6 +175,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         mediaf=new mediaFragment(mediaurl,2);
                             backtype=6;
                         Myrelace(mediaf);
+                        break;
+                    case 601://点击文字新闻
+                        backtype=1;
+                        onBackPressed();
                         break;
                     case 700://点击地区民生
                         Log.i("Main_lessonurl",mediaurl);
@@ -225,6 +224,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         f2.loaddata(map3);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
                         backtype=-1;
+                        onBackPressed();
+                        break;
+                    case 999://返回上一级
+                        if(msg.arg1==1)
+                            backtype=71;
+                        else
+                           backtype=6+msg.arg1;
                         onBackPressed();
                         break;
                     case 88://网络异常
@@ -430,8 +436,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         {
             fManager.popBackStack();
             Log.i("onBackPressed: ","返回汽车列表");
-            carFragment cf=new carFragment();
-            Myrelace(cf);
         }
         //返回类型为文字新闻
         else if(backtype==6)
@@ -457,8 +461,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             {
                 fManager.popBackStack();
                 Log.i("onBackPressed: ","返回地区民生列表");
-                soundFragment2 sf2=new soundFragment2();
-                Myrelace(sf2);
+                detail_sound ds=new detail_sound();
+                Myrelace(ds);
                 ismain=false;
             }
             else
@@ -467,6 +471,39 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             }
 
         }
+        else if(backtype==71)
+        {
+
+                fManager.popBackStack();
+                Log.i("onBackPressed: ","返回地区民生列表");
+                detail_sound ds=new detail_sound();
+                Myrelace(ds);
+                ismain=false;
+
+        }
+        else if(backtype==9)
+        {
+
+                fManager.popBackStack();
+                Log.i("onBackPressed: ","返回吃喝玩乐列表");
+                detail_fun df=new detail_fun();
+                Myrelace(df);
+                ismain=false;
+
+
+        }
+        else if(backtype==8)
+        {
+
+                fManager.popBackStack();
+                Log.i("onBackPressed: ","返回二手市场列表");
+                detail_market dm=new detail_market();
+                Myrelace(dm);
+                ismain=false;
+
+        }
+
+
 
         else if(backtype==-1)
         {

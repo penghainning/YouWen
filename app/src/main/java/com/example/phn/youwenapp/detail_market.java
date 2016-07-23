@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,6 +28,7 @@ public class detail_market extends Fragment implements RadioGroup.OnCheckedChang
     private RadioButton type_pet;
     private RadioButton type_marketcar;
     private RadioButton type_home;
+    private LinearLayout bottom;
 
     public detail_market() {
     }
@@ -41,6 +43,16 @@ public class detail_market extends Fragment implements RadioGroup.OnCheckedChang
         market_tap.setOnCheckedChangeListener(this);
         type_pet.setChecked(true);
         handler=activity.handler;
+        bottom=(LinearLayout)view.findViewById(R.id.bottom);
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message msg=new Message();
+                msg.arg1=2;
+                msg.what=103;
+                handler.sendMessage(msg);
+            }
+        });
         marketlist = (ListView) view.findViewById(R.id.marketlist);
         marketlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

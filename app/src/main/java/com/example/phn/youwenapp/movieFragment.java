@@ -53,7 +53,7 @@ public class movieFragment extends Fragment {
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
         mContext=getActivity();
         activity=(MainActivity)getActivity();
-        new Thread(new load(0)).start();
+        new Thread(new load()).start();
         handler=activity.handler;
         movielist=(ListView)view.findViewById(R.id.movielist);
         movielist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,39 +73,10 @@ public class movieFragment extends Fragment {
         return view;
     }
     class load extends Thread {//接受服务器信息的线程
-        private int n;
-        load(int n){
-            this.n=n;
-        }
+
         public void run() {
             try {
-                if(n==0)
-                {
                     doc = Jsoup.parse(new URL("http://top.iqiyi.com/dianshiju.html#vfrm=7-13-0-1"), 5000);
-                }
-                else if(n==1)
-                {
-                    doc = Jsoup.parse(new URL("http://top.iqiyi.com/dianying.html#vfrm=7-13-0-1"), 5000);
-                }
-                else if(n==2)
-                {
-                    doc = Jsoup.parse(new URL("http://list.iqiyi.com/www/1/----------2---11-1-1-iqiyi--.html"), 5000);
-                }
-
-                else if(n==3)
-                {
-                    doc=Jsoup.parse(new URL("http://list.iqiyi.com/www/1/1-------------11-1-1-iqiyi--.html"),5000);
-                }
-                else if(n==4)
-                {
-                    doc=Jsoup.parse(new URL("http://list.iqiyi.com/www/1/2-------------11-1-1-iqiyi--.html"),5000);
-                }
-                else
-                {
-                    doc=Jsoup.parse(new URL("http://list.iqiyi.com/www/1/3-------------11-1-1-iqiyi--.html"),5000);
-                }
-
-
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
@@ -115,10 +86,6 @@ public class movieFragment extends Fragment {
 
             Message msg = new Message();
             msg.what = 0;
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            bundle.putInt("num",n);
-            msg.setData(bundle);
             myHandler.sendMessage(msg);
 
         }
@@ -130,33 +97,25 @@ public class movieFragment extends Fragment {
                 case 0:
                     try {
                         Bundle bundle = msg.getData();
-                        int n=bundle.getInt("num");
                         mData=new LinkedList<>();
                         int i=0;
-                        if(n<2)
-                        {
+
                             es = doc.select("ul.tv_list>li");
-                            for (Element e : es) {
-                                String number = e.getElementsByTag("em").text().trim();
-                                String title = e.getElementsByTag("a").attr("title").trim();
-                                String lessonurl = e.getElementsByTag("a").attr("href");
-                                String visit = e.getElementsByTag("span").text().trim();
-                                mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
+                            for (Element e : es)
+                            {
+                                if(i<6)
+                                {
+                                    String number = e.getElementsByTag("em").text().trim();
+                                    String title = e.getElementsByTag("a").attr("title").trim();
+                                    String lessonurl = e.getElementsByTag("a").attr("href");
+                                    String visit = e.getElementsByTag("span").text().trim();
+                                    mData.add(new Lesson_data(lessonurl, number, title, visit, ++i));
+                                }
+                                else
+                                    break;
 
                             }
-                        }
-                        else if(n>1) {
-                            es = doc.select("ul.site-piclist*>li");
-                            int j=0;
-                            for (Element e : es) {
-                                String number = String.valueOf(++j);
-                                String title =e.getElementsByTag("a").attr("title").trim();
-                                String lessonurl = e.getElementsByTag("a").attr("href");
-                                String visit = e.getElementsByClass("score").text().trim();
-                                mData.add(new Lesson_data(lessonurl,number,title,visit,++i));
 
-                            }
-                        }
                         mmovieAdapter= new movieAdapter((LinkedList<Lesson_data>) mData, mContext);
                         movielist.setAdapter(mmovieAdapter);
 

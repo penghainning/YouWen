@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,6 +40,7 @@ public class detail_fun extends Fragment implements RadioGroup.OnCheckedChangeLi
     private RadioButton type_newshop;
     private RadioButton type_discount;
     private RadioButton type_recomend;
+    private LinearLayout bottom;
 
     public detail_fun() {
     }
@@ -53,6 +55,16 @@ public class detail_fun extends Fragment implements RadioGroup.OnCheckedChangeLi
         fun_tap.setOnCheckedChangeListener(this);
         type_newshop.setChecked(true);
         handler=activity.handler;
+        bottom=(LinearLayout)view.findViewById(R.id.bottom);
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message msg=new Message();
+                msg.arg1=3;
+                msg.what=103;
+                handler.sendMessage(msg);
+            }
+        });
         funlist = (ListView) view.findViewById(R.id.funlist);
         funlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

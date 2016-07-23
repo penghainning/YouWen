@@ -20,7 +20,6 @@ import java.util.Map;
  * Created by PHN on 2016/7/4.
  */
 public class marketFragment  extends Fragment {
-    LinearLayout bottom;
     ListView marketlist;
     Handler handler;
     List<Map<String, String>> list;
@@ -30,7 +29,6 @@ public class marketFragment  extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.market_fragment, container, false);
-        bottom=(LinearLayout)view.findViewById(R.id.bottom);
         marketlist=(ListView)view.findViewById(R.id.marketlist);
         list = new ArrayList<Map<String, String>>();
         for(int i=0;i<5;i++)
@@ -45,12 +43,6 @@ public class marketFragment  extends Fragment {
         marketlist.setAdapter(marketAdapter);
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.sendEmptyMessage(103);
-            }
-        });
         marketlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -1,68 +1,56 @@
 package com.example.phn.youwenapp;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
-public class carFragment extends Fragment {//汽车栏具体界面
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-    private WebView carwebview;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by PHN on 2016/7/4.
+ */
+public class carFragment extends Fragment {
+
+    LinearLayout carlinerlayout;
+    Handler handler;
+
+
     public carFragment() {
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.car_fragment, container, false);
-        carwebview=(WebView)view.findViewById(R.id.carwebview);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-        WebSettings setting = carwebview.getSettings();
-        setSettings(setting);
-        carwebview.setWebChromeClient(new WebChromeClient());
-        carwebview.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                Log.i("should", view.getUrl());
-                return true;
+        MainActivity activity=(MainActivity) getActivity();
+        handler=activity.handler;
+        carlinerlayout=(LinearLayout)view.findViewById(R.id.carlinerlayout) ;
+        carlinerlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.sendEmptyMessage(500);
             }
         });
         return view;
     }
 
-    private void setSettings(WebSettings setting) {
-        setting.setJavaScriptEnabled(true);
-        setting.setPluginState(WebSettings.PluginState.ON);
-        setting.setJavaScriptCanOpenWindowsAutomatically(true);
-        setting.setAllowFileAccess(true);
-        setting.setDefaultTextEncodingName("UTF-8");
-        setting.setLoadWithOverviewMode(true);
-        setting.setUseWideViewPort(true);
-        setting.setBuiltInZoomControls(true);
-        setting.setDisplayZoomControls(false);
-        setting.setSupportZoom(true);
 
-        setting.setDomStorageEnabled(true);
-        setting.setDatabaseEnabled(true);
-        // 全屏显示
-        setting.setLoadWithOverviewMode(true);
-        setting.setUseWideViewPort(true);
-    }
-    public void onDestroy()
-    {
-        if (carwebview != null) {
-            carwebview.removeAllViews();
-            carwebview.destroy();
-            carwebview = null;
-        }
-        super.onDestroy();
-    }
+
 
 }

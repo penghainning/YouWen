@@ -28,9 +28,15 @@ public class publishFragment extends Fragment {
     Button publishcancel;
     Button publishsend;
     Handler handler;
+    int type;
     public publishFragment() {
+
     }
 
+      public void setType(int type)
+      {
+          this.type=type;
+      }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.publish_fragment, container, false);
         MainActivity activity=(MainActivity)getActivity();
@@ -45,7 +51,10 @@ public class publishFragment extends Fragment {
         publishcancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handler.sendEmptyMessage(102);
+                     Message message=new Message();
+                message.what=999;
+                message.arg1=type;
+                handler.sendMessage(message);
             }
         });
         publishsend=(Button)view.findViewById(R.id.publishsend);
@@ -90,8 +99,26 @@ public class publishFragment extends Fragment {
         publishtown.setAdapter(mAdapter4);
 
         publishmodule =(Spinner) view.findViewById(R.id.publishmodule);
-        String[] mItems5 = getResources().getStringArray(R.array.module);
-        ArrayAdapter<String> mAdapter5=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems5);
-        publishmodule.setAdapter(mAdapter5);
+        if(type==1)
+        {
+            String[] mItems5 = getResources().getStringArray(R.array.module1);
+            ArrayAdapter<String> mAdapter5=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems5);
+            publishmodule.setAdapter(mAdapter5);
+        }
+        else if(type==2)
+        {
+            String[] mItems5 = getResources().getStringArray(R.array.module2);
+            ArrayAdapter<String> mAdapter5=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems5);
+            publishmodule.setAdapter(mAdapter5);
+        }
+        else if(type==3)
+        {
+            String[] mItems5 = getResources().getStringArray(R.array.module3);
+            ArrayAdapter<String> mAdapter5=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems5);
+            publishmodule.setAdapter(mAdapter5);
+        }
+
+
+
     }
 }

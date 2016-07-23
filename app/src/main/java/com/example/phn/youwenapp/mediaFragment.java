@@ -83,7 +83,7 @@ public class mediaFragment extends Fragment {
         back=(Button)view.findViewById(R.id.btn05);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                handler.sendEmptyMessage(102);
+                handler.sendEmptyMessage(601);
             }
         });
         if(type==1)
@@ -99,17 +99,6 @@ public class mediaFragment extends Fragment {
                 view.loadUrl(url);
                 Log.i("should",view.getUrl());
                 return true;
-            }
-
-            public void onPageFinished(WebView view, String url) {
-                if(url!=null && url.contains("open.sina.com")){
-                    String fun="javascript:function getClass(parent,sClass) { var aEle=parent.getElementsByTagName('div'); var aResult=[]; var i=0; for(i<0;i<aEle.length;i++) { if(aEle[i].className==sClass) { aResult.push(aEle[i]); } }; return aResult; } ";
-                    view.loadUrl(fun);
-                    String fun2="javascript:function hideOther() {getClass(document,'wrap')[0].style.display='none';  getClass(document,'menu')[0].style.display='none'; getClass(document,'blk_login')[0].style.display='none';getClass(document,'secondaryHeader')[0].style.display='none';getClass(document,'part03 clearfix')[0].style.display='none';getClass(document,'part04 clearfix')[0].style.display='none';getClass(document,'footer')[0].style.display='none';}";
-                    view.loadUrl(fun2);
-                    view.loadUrl("javascript:hideOther();");
-                }
-                super.onPageFinished(view, url);
             }
         });
         webView.loadUrl(mediaurl);

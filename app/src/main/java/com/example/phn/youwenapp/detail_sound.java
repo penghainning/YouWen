@@ -1,6 +1,5 @@
 package com.example.phn.youwenapp;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,7 +23,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,51 +32,37 @@ import java.util.Map;
 /**
  * Created by PHN on 2016/7/4.
  */
-public class soundFragment2 extends Fragment {
-    ListView soundlist;
+public class detail_sound extends Fragment implements RadioGroup.OnCheckedChangeListener{
     Document doc;
     Elements es;
+    ListView soundlist;
     Handler handler;
-    RadioGroup citiselect;
-    RadioButton city1;
-    RadioButton city2;
     List<Map<String, String>> list;
     SimpleAdapter adapter;
     private boolean success=false;
-    public soundFragment2() {
+    private RadioGroup sound_tap;
+    private RadioButton type_one;
+    private RadioButton type_two;
+    private RadioButton type_three;
+    private LinearLayout bottom;
+    public detail_sound() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sound_fragment2, container, false);
+        View view = inflater.inflate(R.layout.sound_detail, container, false);
+        MainActivity activity=(MainActivity) getActivity();
+        sound_tap=(RadioGroup)view.findViewById(R.id.sound_tab);
+        type_one=(RadioButton)view.findViewById(R.id.type_one);
+        type_two=(RadioButton)view.findViewById(R.id.type_two);
+        type_three=(RadioButton)view.findViewById(R.id.type_three);
+        sound_tap.setOnCheckedChangeListener(this);
+        type_one.setChecked(true);
+        handler=activity.handler;
         soundlist=(ListView)view.findViewById(R.id.soundlist);
-        city1=(RadioButton)view.findViewById(R.id.city1);
-        city2=(RadioButton)view.findViewById(R.id.city2);
         list = new ArrayList<Map<String, String>>();
         adapter=new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
                 new String[] { "title","href" }, new int[] {android.R.id.text1,android.R.id.text2});
         soundlist.setAdapter(adapter);
-        citiselect=(RadioGroup)view.findViewById(R.id.citiselect);
-        citiselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-
-                    case R.id.city1:
-                        new Thread(new load(1)).start();
-                        success=false;
-                        new Thread(new timeError()).start();
-                        city1.setChecked(true);
-                        break;
-                    case R.id.city2:
-                        new Thread(new load(2)).start();
-                        success=false;
-                        new Thread(new timeError()).start();
-                        city2.setChecked(true);
-                        break;
-            }
-        }});
-        MainActivity activity=(MainActivity) getActivity();
-        handler=activity.handler;
-        new Thread(new load(1)).start();
         soundlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,8 +72,45 @@ public class soundFragment2 extends Fragment {
                 handler.sendEmptyMessage(700);
             }
         });
+        bottom=(LinearLayout)view.findViewById(R.id.bottom);
+        bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message msg=new Message();
+                msg.arg1=1;
+                msg.what=103;
+                handler.sendMessage(msg);
+            }
+        });
+        new Thread(new load(1)).start();
+        success=false;
+        new Thread(new timeError()).start();
         return view;
     }
+
+
+
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+
+            case R.id.type_one:
+                new Thread(new load(1)).start();
+                success=false;
+                new Thread(new timeError()).start();
+                type_one.setChecked(true);
+                break;
+            case R.id.type_two:
+                new Thread(new load(2)).start();
+                success=false;
+                new Thread(new timeError()).start();
+                type_two.setChecked(true);
+                break;
+            case R.id.type_three:
+                type_three.setChecked(true);
+                break;
+        }
+    }
+
 
     class load extends Thread {//接受服务器信息的线程
         private  int n;
@@ -144,38 +165,27 @@ public class soundFragment2 extends Fragment {
                         {
                             for (Element e : es)
                             {
-                                if(i<10)
-                                {
-                                    Map<String, String> map = new HashMap<String, String>();
-                                    String h = e.getElementsByClass("z").text() + e.getElementsByTag("a").text();
-                                    if (h.startsWith("[")) {
-                                        map.put("title", String.valueOf(++i) + ": " + h);
-                                        map.put("href", "http://www.swsm.net/" + e.getElementsByTag("a").attr("href"));
-                                        list.add(map);
-                                    }
+                                Map<String, String> map = new HashMap<String, String>();
+                                String h = e.getElementsByClass("z").text() + e.getElementsByTag("a").text();
+                                if (h.startsWith("[")) {
+                                    map.put("title", String.valueOf(++i) + ": " + h);
+                                    map.put("href", "http://www.swsm.net/" + e.getElementsByTag("a").attr("href"));
+                                    list.add(map);
                                 }
-                                else
-                                    break;
-
                             }
                         }
 
-                            else
+                        else
+                        {
+                            for (Element e : es)
                             {
-                                for (Element e : es)
-                                {
-                                    if(i<10)
-                                    {
-                                        Map<String, String> map = new HashMap<String, String>();
-                                        String w=e.getElementsByTag("a").attr("href");
-                                        if(!w.startsWith("http://"))
-                                            w="http://www.sznews.com/"+w;
-                                        map.put("title",String.valueOf(++i)+": "+ e.getElementsByTag("a").text());
-                                        map.put("href", w);
-                                        list.add(map);
-                                    }
-                                    else
-                                        break;
+                                Map<String, String> map = new HashMap<String, String>();
+                                String w=e.getElementsByTag("a").attr("href");
+                                if(!w.startsWith("http://"))
+                                    w="http://www.sznews.com/"+w;
+                                map.put("title",String.valueOf(++i)+": "+ e.getElementsByTag("a").text());
+                                map.put("href", w);
+                                list.add(map);
                             }
 
 
@@ -197,12 +207,7 @@ public class soundFragment2 extends Fragment {
             super.handleMessage(msg);
         }
     };
-    public void loaddata(Map<String, String>m)
-    {
-       list.add(m);
-        adapter.notifyDataSetChanged();
 
-    }
 
     public class timeError extends Thread
     {
@@ -224,3 +229,8 @@ public class soundFragment2 extends Fragment {
         }
     }
 }
+
+
+
+
+

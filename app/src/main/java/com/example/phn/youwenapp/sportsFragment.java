@@ -67,27 +67,7 @@ public class sportsFragment  extends Fragment {
         }
         public void run() {
             try {
-                if(n==0)
-                {
-                    doc = Jsoup.parse(new URL("http://live.qq.com/directory/all"), 5000);
-
-                }
-                else if(n==1)
-                {
-                    doc = Jsoup.parse(new URL("http://live.qq.com/directory/game/Football"), 5000);
-                }
-                else if(n==2)
-                {
-                    doc = Jsoup.parse(new URL("http://live.qq.com/directory/game/Basketball"), 5000);
-                }
-                else if(n==3)
-                {
-                    doc = Jsoup.parse(new URL("http://live.qq.com/directory/game/Billiards"), 5000);
-                }
-                else if(n==4)
-                {
-                    doc = Jsoup.parse(new URL("http://live.qq.com/directory/game/Others"), 5000);
-                }
+                doc = Jsoup.parse(new URL("http://live.qq.com/directory/all"), 5000);
                 es = doc.select("ul#live-list-contentbox>li");
 
             } catch (MalformedURLException e1) {
@@ -111,14 +91,17 @@ public class sportsFragment  extends Fragment {
                     try {
                         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
                         int i=0;
-                        for (Element e : es) {
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("title", String.valueOf(++i)+" :"+e.getElementsByTag("a").attr("title"));
-                            map.put("href", "http://live.qq.com"+e.getElementsByTag("a").attr("href"));
-                            list.add(map);
+                        for (Element e : es)
+                        {
+                            if(i<6)
+                            {
+                                Map<String, String> map = new HashMap<String, String>();
+                                map.put("title", String.valueOf(++i)+" :"+e.getElementsByTag("a").attr("title"));
+                                map.put("href", "http://live.qq.com"+e.getElementsByTag("a").attr("href"));
+                                list.add(map);
+                            }
+
                         }
-
-
                         sportslist.setAdapter(new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_1,
                                 new String[] { "title","href" }, new int[] {
                                 android.R.id.text1,android.R.id.text2

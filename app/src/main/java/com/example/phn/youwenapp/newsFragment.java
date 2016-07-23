@@ -55,30 +55,17 @@ public class newsFragment extends Fragment {
                 handler.sendEmptyMessage(100);
             }
         });
-        new Thread(new load(0)).start();
+        new Thread(new load()).start();
         return view;
     }
 
 
     class load extends Thread {//接受服务器信息的线程
-        private int n;
-        load(int n){
-            this.n=n;
-        }
         public void run() {
             try {
-                if(n==0)
-                {
+
                     doc = Jsoup.parse(new URL("http://news.v1.cn/"), 5000);
                     es = doc.select("div.content1_c*,div.bottomA,div.imgDec");
-
-                }
-                else if(n==1)
-                {
-                    doc = Jsoup.parse(new URL("http://v.ifeng.com/news/"), 5000);
-                    es = doc.select("div.v-mlist>ul>li,div.v-col-bd>ul>li");
-
-                }
 
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
@@ -87,7 +74,6 @@ public class newsFragment extends Fragment {
             }
 
             Message msg = new Message();
-            if(n==1)
             msg.what = 0;
             myHandler.sendMessage(msg);
 
@@ -102,7 +88,7 @@ public class newsFragment extends Fragment {
                         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
                         int i=0;
                         for (Element e : es) {
-                            if(i<45)
+                            if(i<6)
                             {
                                 Map<String, String> map = new HashMap<String, String>();
                                 map.put("title", e.getElementsByTag("a").text());
