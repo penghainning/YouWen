@@ -78,7 +78,10 @@ public class soundFragment2 extends Fragment {
         }});
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        new Thread(new load(1)).start();
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load(1)).start();
+        else
+            handler.sendEmptyMessage(88);
         soundlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,8 +113,7 @@ public class soundFragment2 extends Fragment {
 
 
             } catch (MalformedURLException e1) {
-                handler.sendEmptyMessage(1);
-                Log.i("Malfrom","超时啦");
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 Log.i("IO","其他");

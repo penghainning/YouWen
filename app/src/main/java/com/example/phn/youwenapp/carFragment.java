@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -29,7 +30,7 @@ import java.util.Map;
  */
 public class carFragment extends Fragment {
 
-    LinearLayout carlinerlayout;
+    Button btn;
     Handler handler;
 
 
@@ -40,8 +41,8 @@ public class carFragment extends Fragment {
         View view = inflater.inflate(R.layout.car_fragment, container, false);
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        carlinerlayout=(LinearLayout)view.findViewById(R.id.carlinerlayout) ;
-        carlinerlayout.setOnClickListener(new View.OnClickListener() {
+        btn=(Button) view.findViewById(R.id.btn) ;
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.sendEmptyMessage(500);

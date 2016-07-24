@@ -45,10 +45,13 @@ public class lessonFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lesson_fragment, container, false);
-        new Thread(new load()).start();
         mContext=getActivity();
         activity=(MainActivity)getActivity();
         handler=activity.handler;
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load()).start();
+        else
+            handler.sendEmptyMessage(88);
         mlesson=(ListView)view.findViewById(R.id.mlesson);
         mlesson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,6 +73,7 @@ public class lessonFragment extends Fragment {
             try {
                 doc = Jsoup.parse(new URL("http://open.sina.com.cn/"), 5000);//获取document
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 handler.sendEmptyMessage(88);

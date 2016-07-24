@@ -43,7 +43,10 @@ public class jokeFragment extends Fragment {
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
         jokelist = (ListView) view.findViewById(R.id.jokelist);
+        if(Networkutil.isNetworkAvailable(getActivity()))
         new Thread(new load()).start();
+        else
+            handler.sendEmptyMessage(88);
         jokelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -66,7 +69,9 @@ public class jokeFragment extends Fragment {
 
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
+                handler.sendEmptyMessage(88);
             } catch (IOException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             }
 

@@ -42,7 +42,10 @@ public class downnewsFragment extends Fragment {
         downnewslist=(ListView)view.findViewById(R.id.downnewslist);
         MainActivity activity=(MainActivity) getActivity();
         handler=activity.handler;
-        new  Thread(new load()).start();
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load()).start();
+        else
+            handler.sendEmptyMessage(88);
         downnewslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,6 +68,7 @@ public class downnewsFragment extends Fragment {
                 Log.i("run: ",es.text());
 
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 handler.sendEmptyMessage(88);

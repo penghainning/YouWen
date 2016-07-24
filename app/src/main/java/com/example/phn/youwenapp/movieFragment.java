@@ -53,8 +53,11 @@ public class movieFragment extends Fragment {
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
         mContext=getActivity();
         activity=(MainActivity)getActivity();
-        new Thread(new load()).start();
         handler=activity.handler;
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load()).start();
+        else
+            handler.sendEmptyMessage(88);
         movielist=(ListView)view.findViewById(R.id.movielist);
         movielist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,6 +81,7 @@ public class movieFragment extends Fragment {
             try {
                     doc = Jsoup.parse(new URL("http://top.iqiyi.com/dianshiju.html#vfrm=7-13-0-1"), 5000);
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();

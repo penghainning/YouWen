@@ -55,7 +55,10 @@ public class newsFragment extends Fragment {
                 handler.sendEmptyMessage(100);
             }
         });
-        new Thread(new load()).start();
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load()).start();
+        else
+            handler.sendEmptyMessage(88);
         return view;
     }
 
@@ -68,8 +71,10 @@ public class newsFragment extends Fragment {
                     es = doc.select("div.content1_c*,div.bottomA,div.imgDec");
 
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             }
 

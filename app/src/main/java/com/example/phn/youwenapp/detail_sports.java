@@ -143,6 +143,7 @@ public class detail_sports extends Fragment implements RadioGroup.OnCheckedChang
                 es = doc.select("ul#live-list-contentbox>li");
 
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 handler.sendEmptyMessage(88);

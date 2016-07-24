@@ -41,9 +41,12 @@ public class sportsFragment  extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sports_fragment, container, false);
-        new Thread(new load(0)).start();
         MainActivity activity=(MainActivity)getActivity();
         handler=activity.handler;
+        if(Networkutil.isNetworkAvailable(getActivity()))
+            new Thread(new load(0)).start();
+        else
+            handler.sendEmptyMessage(88);
         sportslist=(ListView)view.findViewById(R.id.sportslist);
         sportslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,6 +74,7 @@ public class sportsFragment  extends Fragment {
                 es = doc.select("ul#live-list-contentbox>li");
 
             } catch (MalformedURLException e1) {
+                handler.sendEmptyMessage(88);
                 e1.printStackTrace();
             } catch (IOException e1) {
                 handler.sendEmptyMessage(88);

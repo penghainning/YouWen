@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private searchFragment searchf=null;
     private int width;
     private int backtype;
+    private static boolean Hasnet=true;
     private boolean ismain=true;
     public static int type=0;
     public static final int UP_ONE = 0;
@@ -229,7 +230,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         onBackPressed();
                         break;
                     case 88://网络异常
-                        Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
+                        if(Hasnet)
+                        {
+                            Toast.makeText(MainActivity.this,"网络异常，请检查你的网络",Toast.LENGTH_SHORT).show();
+                            Hasnet=false;
+                        }
+
                     default:
                         break;
                 }
@@ -285,8 +291,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         down_viewpager.setAdapter(mAdapter2);
         up_viewpager.setCurrentItem(0);
         down_viewpager.setCurrentItem(0);
-        down_viewpager.setOffscreenPageLimit(7);
-        up_viewpager.setOffscreenPageLimit(4);
         up_tab.setOnCheckedChangeListener(this);
         down_tab.setOnCheckedChangeListener(this);
         up_viewpager.addOnPageChangeListener(this);
