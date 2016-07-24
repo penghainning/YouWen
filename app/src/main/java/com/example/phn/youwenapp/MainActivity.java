@@ -196,32 +196,27 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         backtype=9;
                         Myrelace(mf);
                         break;
+                    case 1000://点击段子
+                       detail_joke dj=new detail_joke();
+                        backtype=10;
+                        Myrelace(dj);
+                        break;
                     case 105://发布地区民生
-                        soundFragment2 s2=(soundFragment2) down_viewpager.getAdapter().instantiateItem(down_viewpager,1);
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("title",bundle.getString("title"));
-                        map.put("content",bundle.getString("content"));
-                        s2.loaddata(map);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
                         backtype=-1;
                         onBackPressed();
                         break;
                     case 106://发布二手市场
-                        marketFragment market=(marketFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,3);
-                        Map<String, String> map2= new HashMap<String, String>();
-                        map2.put("title",bundle.getString("title"));
-                        map2.put("content",bundle.getString("content"));
-                        market.loaddata(map2);
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
                         backtype=-1;
                         onBackPressed();
                         break;
                     case 107://发布吃喝玩乐
-                        funFragment f2=(funFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,2);
+                       /* funFragment f2=(funFragment) down_viewpager.getAdapter().instantiateItem(down_viewpager,2);
                         Map<String, String> map3 = new HashMap<String, String>();
                         map3.put("title",bundle.getString("title"));
                         map3.put("content",bundle.getString("content"));
-                        f2.loaddata(map3);
+                        f2.loaddata(map3);*/
                         Toast.makeText(MainActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
                         backtype=-1;
                         onBackPressed();
@@ -481,6 +476,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 ismain=false;
 
         }
+        else if(backtype==8)
+        {
+
+            fManager.popBackStack();
+            Log.i("onBackPressed: ","返回二手市场列表");
+            detail_market dm=new detail_market();
+            Myrelace(dm);
+            ismain=false;
+
+        }
+
         else if(backtype==9)
         {
 
@@ -490,21 +496,25 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 Myrelace(df);
                 ismain=false;
 
-
         }
-        else if(backtype==8)
+        //返回类型为段子
+        else if(backtype==10)
         {
-
+            if(ismain)
+            {
                 fManager.popBackStack();
-                Log.i("onBackPressed: ","返回二手市场列表");
-                detail_market dm=new detail_market();
-                Myrelace(dm);
+                Log.i("onBackPressed: ","返回段子列表");
+                jokeFragment jf=new jokeFragment();
+                Myrelace(jf);
                 ismain=false;
+            }
+            else
+            {
+                fManager.popBackStack();
+            }
 
         }
-
-
-
+        //普通返回
         else if(backtype==-1)
         {
             fManager.popBackStack();

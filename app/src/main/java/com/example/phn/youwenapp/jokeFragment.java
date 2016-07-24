@@ -44,15 +44,14 @@ public class jokeFragment extends Fragment {
         handler=activity.handler;
         jokelist = (ListView) view.findViewById(R.id.jokelist);
         new Thread(new load()).start();
-       /* jokelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        jokelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, String> m=(Map<String,String>)jokelist.getAdapter().getItem(position);
-                Log.i("url",m.get("href"));
-                MainActivity.mediaurl=m.get("href");
-                handler.sendEmptyMessage(100);
+                MainActivity.mediaurl=m.get("title");
+                handler.sendEmptyMessage(1000);
             }
-        });*/
+        });
         return view;
     }
 
